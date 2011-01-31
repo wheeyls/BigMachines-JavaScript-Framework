@@ -26,5 +26,7 @@ define(["jquery","qunit"],function($) {
 		return _BM_USER_LOGIN === "superuser";
 	}
 	
+	test_util.setup();
+	
 	return test_util;
 });

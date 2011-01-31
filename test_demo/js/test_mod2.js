@@ -2,10 +2,10 @@ define([],function() {
 	var test_mod = {};
 	
 	test_mod.test_func = function() {
-		return true;
+		return false;
 	}
 
-	require(["test_mod_tests"]);
+	require(["test_mod2_tests"]);
 	
 	return test_mod;
 });

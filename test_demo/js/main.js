@@ -19,4 +19,8 @@ require.ready(function() {
 		console.info("test_func returns: " + test_mod.test_func());
 	});
 	
+	require(["test_mod2"],function(tm2) {
+		console.info("test_mod2 test_func returns: " + tm2.test_func());
+	});
+	
 });
