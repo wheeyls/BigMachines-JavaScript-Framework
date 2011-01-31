@@ -11,14 +11,11 @@ require.ready(function() {
 
 	//Do nested require() calls in here if you want to load code
 	//after page load.
-	/* require(["test_mod"],function(test_mod) {
+	require(["test_mod"],function(test_mod) {
 		// do some stuff with it
 		console.info("test_func returns: " + test_mod.test_func());
 		
 		test_mod.run_tests();
 	});
-	*/
-	require(["test_util"],function(test_util) {
-		test_util.setup();
-	});	
+	
 });

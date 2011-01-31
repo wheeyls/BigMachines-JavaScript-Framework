@@ -2,7 +2,7 @@
  * @classDescription A runner for UI/unit tests
  * @constructor
  */
-define(["jquery-1.4.2.min","qunit"],function($) {
+define(["jquery","qunit"],function($) {
 	var test_util = {};
 	
 	/** 
