@@ -11,11 +11,12 @@ require.ready(function() {
 
 	//Do nested require() calls in here if you want to load code
 	//after page load.
+	
+	_BM_USER_LOGIN = "superuser";
+	
 	require(["test_mod"],function(test_mod) {
 		// do some stuff with it
 		console.info("test_func returns: " + test_mod.test_func());
-		
-		test_mod.run_tests();
 	});
 	
 });
