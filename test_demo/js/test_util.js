@@ -23,7 +23,7 @@ define(["jquery","qunit"],function($) {
 	}
 	
 	test_util.run_tests = function() {
-		return _BM_USER_LOGIN === "superuser";
+		return _BM_USER_LOGIN === "tbrandt";
 	}
 	
 	test_util.setup();

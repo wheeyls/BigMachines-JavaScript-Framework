@@ -6,5 +6,7 @@ define(["test_util","test_mod"],function(test_util,test_mod) {
 		});
 	}
 	
-	run_tests();
+	if(test_util.run_tests()) {
+		run_tests();
+	}
 });
