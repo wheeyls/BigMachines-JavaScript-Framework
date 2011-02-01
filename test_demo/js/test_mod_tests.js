@@ -8,8 +8,5 @@ define(["test_mod"],function(test_mod) {
 		});
 	}
 	
-	/* if(test_util.run_tests()) {
-		run_tests();
-	} */
 	return tests;
 });
