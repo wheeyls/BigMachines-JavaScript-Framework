@@ -6,7 +6,7 @@
 * @requires qunit
 * @constructor
 */
-define(["jquery","logger","qunit"],function($,logger) {
+define(["jquery","logger","qunit","text!./qunit.css"],function($,logger) {
 	// define as global to create a singleton
 	// manager = manager || {};
 	var manager = {};
