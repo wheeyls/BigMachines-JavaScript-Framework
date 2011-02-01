@@ -24,11 +24,14 @@ define(["jquery","logger","qunit"],function($,logger) {
 	}
 	
 	test_util.run_tests = function() {
-		return typeof _BM_USER_LOGIN === "undefined" || _BM_USER_LOGIN === "tbrandt";
+		var testUsers = { tbrandt:1, superuser:1 };
+		return typeof _BM_USER_LOGIN === "undefined" || _BM_USER_LOGIN in testUsers;
 	}
 	
-	test_util.setup();
-	logger.info("loaded test_util");
+	if(test_util.run_tests()) {
+		test_util.setup();
+		logger.info("loaded test_util");
+	}
 	
 	return test_util;
 });
