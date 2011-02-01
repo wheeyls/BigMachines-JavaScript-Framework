@@ -10,7 +10,7 @@ define(["jquery","logger","qunit"],function($,logger) {
 	 * Adds the qunit test results/CSS to the page
 	 */
 	test_util.setup = function() {
-		logger.log("setting up test_util");
+		logger.info("setting up test_util");
 		var qunitContainer = document.createElement("div");
 		qunitContainer.id = "qunit_container";
 		$(qunitContainer).append(
@@ -28,7 +28,7 @@ define(["jquery","logger","qunit"],function($,logger) {
 	}
 	
 	test_util.setup();
-	logger.log("loaded test_util");
+	logger.info("loaded test_util");
 	
 	return test_util;
 });

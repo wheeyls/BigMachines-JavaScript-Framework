@@ -13,13 +13,15 @@ require(["logger"],function(logger) {
 		//Do nested require() calls in here if you want to load code
 		//after page load.
 		
+		logger.setLogLevel("warn");
+		
 		require(["test_mod"],function(test_mod) {
 			// do some stuff with it
-			logger.log("test_func returns: " + test_mod.test_func());
+			logger.info("test_func returns: " + test_mod.test_func());
 		});
 		
 		require(["test_mod2"],function(tm2) {
-			logger.log("test_mod2 test_func returns: " + tm2.test_func());
+			logger.info("test_mod2 test_func returns: " + tm2.test_func());
 		});
 		
 	});
