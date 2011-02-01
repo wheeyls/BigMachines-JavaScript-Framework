@@ -1,12 +1,19 @@
+/**
+* @namespace A second module to test the module framework
+* @name test_mod2
+*/
 define(["manager"],function(mgr) {
 	mgr.register("test_mod2");
-	var test_mod = {};
+	var test_mod2 = {};
 	
-	test_mod.test_func = function() {
+	/**
+	* Test func returns false
+	* @memberOf test_mod2
+	* @returns {Boolean} false
+	*/
+	test_mod2.test_func = function() {
 		return false;
 	}
-
-	//require(["test_mod2_tests"]);
 	
-	return test_mod;
+	return test_mod2;
 });

@@ -1,5 +1,9 @@
 /** 
 * @namespace Manages common BigMachines modules
+* @name manager
+* @requires jquery
+* @requires logger
+* @requires qunit
 * @constructor
 */
 define(["jquery","logger","qunit"],function($,logger) {
@@ -13,12 +17,15 @@ define(["jquery","logger","qunit"],function($,logger) {
 	var module_test_url = "";
 
 	/**
-	* Called by modules, passing in their module name as a string
+	* Add module to the list of modules managed by this manager and run tests if necessary.
+	* @memberOf manager
+	* @param module_name {String}: name of module to register
+	* @param test_module_name {String}: Optional. Name of test suite module. If not specified, defaults to {module_name}_tests
 	*/
 	manager.register = function(module_name,test_module_name) {
 		modules.push(module_name);
 
-		if(manager.manager_enabled()) {
+		if(manager.test_enabled()) {
 			// run tests
 			setup_qunit();
 			//require each test separately and asynchronously
@@ -53,9 +60,11 @@ define(["jquery","logger","qunit"],function($,logger) {
 	}
 	
 	/**
-	* Test to see if this funtionality is on.
+	* Test to see if testing funtionality is on.
+	* @memberOf manager
+	* @returns {Boolean} If true, run tests on modules.
 	*/
-	manager.manager_enabled = function() {
+	manager.test_enabled = function() {
 		// flag set in header/footer: 
 		var flag_set = $("#mod_mgr_run_tests").attr("value") === "true";
 		

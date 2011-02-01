@@ -1,0 +1,6 @@
+ > JsDoc Toolkit main() running at Fri Jan 28 2011 13:55:23 GMT-0800 (PST).
+ > With options: 
+ >     o: true
+ >     t: templates/jsdoc\
+ >     _: modules/,/output
+ >     a: true

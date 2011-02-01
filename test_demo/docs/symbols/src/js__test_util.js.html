@@ -1,0 +1,44 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/** 
+<span class='line'>  2</span>  * @classDescription A runner for UI/unit tests
+<span class='line'>  3</span>  * @constructor
+<span class='line'>  4</span>  */</span><span class="WHIT">
+<span class='line'>  5</span> </span><span class="NAME">define</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="STRN">"jquery"</span><span class="PUNC">,</span><span class="STRN">"logger"</span><span class="PUNC">,</span><span class="STRN">"qunit"</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">$</span><span class="PUNC">,</span><span class="NAME">logger</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="WHIT">	</span><span class="WHIT">
+<span class='line'>  7</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">test_util</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  8</span> </span><span class="WHIT">	</span><span class="WHIT">
+<span class='line'>  9</span> </span><span class="WHIT">	</span><span class="COMM">/** 
+<span class='line'> 10</span> 	 * Adds the qunit test results/CSS to the page
+<span class='line'> 11</span> 	 */</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="WHIT">	</span><span class="NAME">test_util.setup</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 13</span> </span><span class="WHIT">		</span><span class="NAME">logger.info</span><span class="PUNC">(</span><span class="STRN">"setting up test_util"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">qunitContainer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">document.createElement</span><span class="PUNC">(</span><span class="STRN">"div"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 15</span> </span><span class="WHIT">		</span><span class="NAME">qunitContainer.id</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"qunit_container"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 16</span> </span><span class="WHIT">		</span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">qunitContainer</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">append</span><span class="PUNC">(</span><span class="WHIT">
+<span class='line'> 17</span> </span><span class="WHIT">									</span><span class="STRN">"&lt;h1 id='qunit-header'>Javascript Testing&lt;/h1>"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="WHIT">
+<span class='line'> 18</span> </span><span class="WHIT">									</span><span class="STRN">"&lt;h2 id='qunit-banner'>&lt;/h2>"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'> 19</span> </span><span class="WHIT">									</span><span class="STRN">"&lt;h2 id='qunit-userAgent'>&lt;/h2>"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'> 20</span> </span><span class="WHIT">									</span><span class="STRN">"&lt;ol id='qunit-tests'>&lt;/ol>"</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'> 21</span> </span><span class="WHIT">									</span><span class="STRN">"&lt;div id='qunit-fixture'>test markup, will be hidden&lt;/div>"</span><span class="WHIT">
+<span class='line'> 22</span> </span><span class="WHIT">								</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 23</span> </span><span class="WHIT">		</span><span class="NAME">$</span><span class="PUNC">(</span><span class="STRN">"body"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">append</span><span class="PUNC">(</span><span class="NAME">qunitContainer</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 24</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 25</span> </span><span class="WHIT">	</span><span class="WHIT">
+<span class='line'> 26</span> </span><span class="WHIT">	</span><span class="NAME">test_util.run_tests</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 27</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">testUsers</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="NAME">tbrandt</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">superuser</span><span class="PUNC">:</span><span class="NUMB">1</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 28</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">_BM_USER_LOGIN</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">"undefined"</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">_BM_USER_LOGIN</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">testUsers</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 29</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 30</span> </span><span class="WHIT">	</span><span class="WHIT">
+<span class='line'> 31</span> </span><span class="WHIT">	</span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">test_util.run_tests</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 32</span> </span><span class="WHIT">		</span><span class="NAME">test_util.setup</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 33</span> </span><span class="WHIT">		</span><span class="NAME">logger.info</span><span class="PUNC">(</span><span class="STRN">"loaded test_util"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 34</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 35</span> </span><span class="WHIT">	</span><span class="WHIT">
+<span class='line'> 36</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">test_util</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 37</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
