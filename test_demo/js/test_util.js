@@ -2,14 +2,15 @@
  * @classDescription A runner for UI/unit tests
  * @constructor
  */
-define(["jquery","qunit"],function($) {
+define(["jquery","logger","qunit"],function($,logger) {
+	
 	var test_util = {};
 	
 	/** 
 	 * Adds the qunit test results/CSS to the page
 	 */
 	test_util.setup = function() {
-		console.info("setting up test_util");
+		logger.log("setting up test_util");
 		var qunitContainer = document.createElement("div");
 		qunitContainer.id = "qunit_container";
 		$(qunitContainer).append(
@@ -23,10 +24,11 @@ define(["jquery","qunit"],function($) {
 	}
 	
 	test_util.run_tests = function() {
-		return _BM_USER_LOGIN === "tbrandt";
+		return typeof _BM_USER_LOGIN === "undefined" || _BM_USER_LOGIN === "tbrandt";
 	}
 	
 	test_util.setup();
+	logger.log("loaded test_util");
 	
 	return test_util;
 });
