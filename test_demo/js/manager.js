@@ -25,7 +25,7 @@ define(["jquery","logger","qunit"],function($,logger) {
 	manager.register = function(module_name,test_module_name) {
 		modules.push(module_name);
 
-		if(manager.test_enabled()) {
+		if(test_enabled()) {
 			// run tests
 			setup_qunit();
 			//require each test separately and asynchronously
@@ -64,7 +64,7 @@ define(["jquery","logger","qunit"],function($,logger) {
 	* @memberOf manager
 	* @returns {Boolean} If true, run tests on modules.
 	*/
-	manager.test_enabled = function() {
+	var test_enabled = function() {
 		// run tests only if the user is superuser
 		var user_set = typeof _BM_USER_LOGIN ==="undefined" || _BM_USER_LOGIN === "superuser";
 		
