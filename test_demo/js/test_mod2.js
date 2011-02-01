@@ -1,6 +1,7 @@
 /**
 * @namespace A second module to test the module framework
 * @name test_mod2
+* @requires manager
 */
 define(["manager"],function(mgr) {
 	mgr.register("test_mod2");
