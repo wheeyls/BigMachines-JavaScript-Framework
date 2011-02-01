@@ -4,7 +4,7 @@
 * @requires manager
 */
 define(["manager"],function(mgr) {
-	mgr.register("test_mod2");
+	//mgr.register("test_mod2");
 	var test_mod2 = {};
 	
 	/**

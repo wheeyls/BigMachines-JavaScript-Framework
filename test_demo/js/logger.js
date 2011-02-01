@@ -11,9 +11,9 @@ define([],function(mgr) {
 	var loglevel = loglevels.debug;
 	
 	/**
-	* Set the loggers log level
+	* Set the logger's log level. If the logger's log level is less than the level of the message, the message will not be displayed. e.g. logger.warn will be displayed if logger's level is warn, info, or debug.
 	* @memberOf logger
-	* @param level {String}: One of [error,warn,info,debug]
+	* @param level {String}: One of [error < warn < info < debug]
 	*/
 	logger.setLogLevel = function(level) {
 		loglevel = loglevels.level;

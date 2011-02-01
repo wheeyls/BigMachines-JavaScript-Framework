@@ -18,9 +18,9 @@
 <span class='line'> 11</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">loglevel</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">loglevels.debug</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 12</span> </span><span class="WHIT">	</span><span class="WHIT">
 <span class='line'> 13</span> </span><span class="WHIT">	</span><span class="COMM">/**
-<span class='line'> 14</span> 	* Set the loggers log level
+<span class='line'> 14</span> 	* Set the logger's log level. If the logger's log level is less than the level of the message, the message will not be displayed. e.g. logger.warn will be displayed if logger's level is warn, info, or debug.
 <span class='line'> 15</span> 	* @memberOf logger
-<span class='line'> 16</span> 	* @param level {String}: One of [error,warn,info,debug]
+<span class='line'> 16</span> 	* @param level {String}: One of [error &lt; warn &lt; info &lt; debug]
 <span class='line'> 17</span> 	*/</span><span class="WHIT">
 <span class='line'> 18</span> </span><span class="WHIT">	</span><span class="NAME">logger.setLogLevel</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">level</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 19</span> </span><span class="WHIT">		</span><span class="NAME">loglevel</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">loglevels.level</span><span class="PUNC">;</span><span class="WHIT">
