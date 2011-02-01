@@ -1,0 +1,23 @@
+<html>
+	<head>
+		<script src="js/jquery-1.4.2.min.js"></script>
+		<script>
+			console.info("$ version is: " + $.fn.jquery);
+			console.info("jQuery version is: " + jQuery.fn.jquery);
+			/*$("body").appendChild("<p>$ appended successfully</p>");
+			jQuery("body").appendChild("<p>jQuery appended successfully</p>");*/
+		</script>
+		<script src="js/require.js" data-main="main-jq-mod"></script>
+		<script>
+      function after() {
+			  console.info("after $ version is: " + $.fn.jquery);
+			  console.info("after jQuery version is: " + jQuery.fn.jquery);
+      }
+      setTimeout(after, 1000);
+			/*$("body").appendChild("<p>$ appended successfully</p>");
+			jQuery("body").appendChild("<p>jQuery appended successfully</p>");*/
+		</script>
+	</head>
+	<body>
+	</body>
+</html>
