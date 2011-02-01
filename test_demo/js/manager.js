@@ -6,7 +6,7 @@
 * @requires qunit
 * @constructor
 */
-define(["jquery","logger","qunit","text!./qunit.css"],function($,logger) {
+define(["jquery","logger","text!qunit.css","qunit"],function($,logger,css) {
 	// define as global to create a singleton
 	// manager = manager || {};
 	var manager = {};
@@ -55,6 +55,9 @@ define(["jquery","logger","qunit","text!./qunit.css"],function($,logger) {
 									"<div id='qunit-fixture'>test markup, will be hidden</div>"
 									);
 			$("body").append(qunitContainer);
+			
+			// css
+			$("head").append("<style>" + css + "</style>");
 		}
 		return;
 	}
