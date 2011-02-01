@@ -26,7 +26,7 @@ define([],function() {
 		}
 	}
 	
-	logger.err = function(str) {
+	logger.error = function(str) {
 		if(loglevel >= loglevels.err) {
 			console.error(str);
 		}
@@ -35,7 +35,7 @@ define([],function() {
 	logger.debug("debugging info");
 	logger.info("info");
 	logger.warn("warning");
-	logger.err("error");
+	//logger.error("error");
 	logger.info("initialized logger");
 	
 	return logger;
