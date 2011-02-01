@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - test_mod</title>
+		<title>JsDoc Reference - logger</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -208,7 +208,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace test_mod
+				Namespace logger
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -216,16 +216,16 @@ ul.inheritsList
 				
 				
 			
-				A module to test the module framework
+				A utility for logging messages to the console
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/js__test_mod.js.html">test_mod.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/js__logger.js.html">logger.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class test_mod.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class logger.">
 				<caption>Namespace Summary</caption>
 				<thead>
 					<tr>
@@ -238,7 +238,7 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/test_mod.html#constructor">test_mod</a></b>
+								<b><a href="../symbols/logger.html#constructor">logger</a></b>
 							</div>
 							<div class="description"></div>
 						</td>
@@ -254,7 +254,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class test_mod.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class logger.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -267,9 +267,45 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">test_mod.<b><a href="../symbols/test_mod.html#.test_func">test_func</a></b>()
+								<div class="fixedFont">logger.<b><a href="../symbols/logger.html#.debug">debug</a></b>(str)
 								</div>
-								<div class="description">Test func returns a true value</div>
+								<div class="description">Log a debug message (white)</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">logger.<b><a href="../symbols/logger.html#.error">error</a></b>(str)
+								</div>
+								<div class="description">Log an error message (red)</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">logger.<b><a href="../symbols/logger.html#.info">info</a></b>(str)
+								</div>
+								<div class="description">Log an info message (blue)</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">logger.<b><a href="../symbols/logger.html#.setLogLevel">setLogLevel</a></b>(level)
+								</div>
+								<div class="description">Set the loggers log level</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">logger.<b><a href="../symbols/logger.html#.warn">warn</a></b>(str)
+								</div>
+								<div class="description">Log a warning message (yellow)</div>
 							</td>
 						</tr>
 					
@@ -290,7 +326,7 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>test_mod</b>
+						<b>logger</b>
 				</div>
 				
 				<div class="description">
@@ -321,15 +357,15 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name=".test_func"> </a>
+					<a name=".debug"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					<span class="light">{Boolean}</span>
-					<span class="light">test_mod.</span><b>test_func</b>()
+					
+					<span class="light">logger.</span><b>debug</b>(str)
 					
 					</div>
 					<div class="description">
-						Test func returns a true value
+						Log a debug message (white)
 						
 						
 					</div>
@@ -337,16 +373,164 @@ ul.inheritsList
 					
 					
 						
-						
-						
-						
-						
 							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
+							<dt class="heading">Parameters:</dt>
 							
-								<dd><span class="light fixedFont">{Boolean}</span> true</dd>
+								<dt>
+									<b>str</b>
+									
+								</dt>
+								<dd>{String}: The string to write</dd>
 							
 							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".error"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">logger.</span><b>error</b>(str)
+					
+					</div>
+					<div class="description">
+						Log an error message (red)
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>str</b>
+									
+								</dt>
+								<dd>{String}: The string to write</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".info"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">logger.</span><b>info</b>(str)
+					
+					</div>
+					<div class="description">
+						Log an info message (blue)
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>str</b>
+									
+								</dt>
+								<dd>{String}: The string to write</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".setLogLevel"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">logger.</span><b>setLogLevel</b>(level)
+					
+					</div>
+					<div class="description">
+						Set the loggers log level
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>level</b>
+									
+								</dt>
+								<dd>{String}: One of [error,warn,info,debug]</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".warn"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">logger.</span><b>warn</b>(str)
+					
+					</div>
+					<div class="description">
+						Log a warning message (yellow)
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>str</b>
+									
+								</dt>
+								<dd>{String}: The string to write</dd>
+							
+							</dl>
+						
+						
+						
+						
 						
 						
 						

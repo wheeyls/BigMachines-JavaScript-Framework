@@ -65,15 +65,19 @@ define(["jquery","logger","qunit"],function($,logger) {
 	* @returns {Boolean} If true, run tests on modules.
 	*/
 	manager.test_enabled = function() {
-		// flag set in header/footer: 
-		var flag_set = $("#mod_mgr_run_tests").attr("value") === "true";
-		
 		// run tests only if the user is superuser
 		var user_set = typeof _BM_USER_LOGIN ==="undefined" || _BM_USER_LOGIN === "superuser";
 		
-		var result = flag_set && user_set;
-
-		return result;
+		if(user_set) {
+		
+			// flag set in header/footer: 
+			var flag_set = $("#mod_mgr_run_tests").attr("value") === "true";
+			if(flag_set) {
+				return true;
+			}
+		}
+		
+		return false;
 	};
 	
 	return manager;
