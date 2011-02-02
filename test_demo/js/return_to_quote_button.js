@@ -8,7 +8,8 @@
   * @requires commerce_ids
   * @requires jquery.cookie
   **/
-define(["commerce_ids", "jquery.cookie"], function(c_ids) {
+define(["manager","jquery.cookie"], function(mgr) {
+	mgr.register("return_to_quote_button");
   var return_to_quote_button = {};
 
   /**
@@ -52,6 +53,7 @@ define(["commerce_ids", "jquery.cookie"], function(c_ids) {
    * @memberOf return_to_quote_button
    */
   return_to_quote_button.set_cookie_in_commerce = function() {
+	require(["commerce_ids"],function() {
     //get ids off page
     var ids = c_ids.get_ids();
 		//builds url
@@ -66,6 +68,7 @@ define(["commerce_ids", "jquery.cookie"], function(c_ids) {
 		if(last_transaction.length !== 0){
 			jQuery.cookie("last_transaction",last_transaction, {path: '/'}); 
 		}
+	});
   };
 
 
