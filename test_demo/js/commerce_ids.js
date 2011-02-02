@@ -3,6 +3,7 @@
 *
 * @name commerce_ids
 * @description A module used to grab common ids out of the source of a BigMachines quote
+* @requires manager
 **/
 define(["manager"],function(mgr) {
 	mgr.register("commerce_ids");

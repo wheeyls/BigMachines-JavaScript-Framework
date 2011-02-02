@@ -27,6 +27,7 @@ define(["logger","text!qunit.css","qunit"],function(logger,css) {
 
 		if(test_enabled()) {
 			// run tests
+			logger.info("running tests for: " + module_name);
 			setup_qunit();
 			//require each test separately and asynchronously
 			var mod_test_name = test_module_name || module_test_url + module_name + "_tests";
