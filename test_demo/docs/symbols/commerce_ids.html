@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - test_mod2</title>
+		<title>JsDoc Reference - commerce_ids</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -214,7 +214,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace test_mod2
+				Namespace commerce_ids
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -222,16 +222,16 @@ ul.inheritsList
 				
 				
 			
-				A second module to test the module framework
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/js__test_mod2.js.html">test_mod2.js</a>.
+				
+					<br /><i>Defined in: </i> <a href="../symbols/src/js__commerce_ids.js.html">commerce_ids.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class test_mod2.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class commerce_ids.">
 				<caption>Namespace Summary</caption>
 				<thead>
 					<tr>
@@ -244,9 +244,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/test_mod2.html#constructor">test_mod2</a></b>
+								<b><a href="../symbols/commerce_ids.html#constructor">commerce_ids</a></b>
 							</div>
-							<div class="description"></div>
+							<div class="description">A module used to grab common ids out of the source of a BigMachines quote</div>
 						</td>
 					</tr>
 				</tbody>
@@ -260,7 +260,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class test_mod2.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class commerce_ids.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -273,9 +273,9 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">test_mod2.<b><a href="../symbols/test_mod2.html#.test_func">test_func</a></b>()
+								<div class="fixedFont">commerce_ids.<b><a href="../symbols/commerce_ids.html#.get_ids">get_ids</a></b>()
 								</div>
-								<div class="description">Test func returns false</div>
+								<div class="description">Grab a hash of common ids</div>
 							</td>
 						</tr>
 					
@@ -296,11 +296,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>test_mod2</b>
+						<b>commerce_ids</b>
 				</div>
 				
 				<div class="description">
-					
+					A module used to grab common ids out of the source of a BigMachines quote
 					
 				</div>
 				
@@ -334,15 +334,15 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name=".test_func"> </a>
+					<a name=".get_ids"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					<span class="light">{Boolean}</span>
-					<span class="light">test_mod2.</span><b>test_func</b>()
+					<span class="light">{, , , , , }</span>
+					<span class="light">commerce_ids.</span><b>get_ids</b>()
 					
 					</div>
 					<div class="description">
-						Test func returns false
+						Grab a hash of common ids
 						
 						
 					</div>
@@ -357,7 +357,17 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{Boolean}</span> false</dd>
+								<dd>ids {Object}</dd>
+							
+								<dd>ids.document_id {String}</dd>
+							
+								<dd>ids.open_action_id {String}</dd>
+							
+								<dd>ids.version_id {String}</dd>
+							
+								<dd>ids.document_number {String}</dd>
+							
+								<dd>ids.bsid {String}</dd>
 							
 							</dl>
 						
