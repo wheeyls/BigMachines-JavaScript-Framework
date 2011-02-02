@@ -27,7 +27,7 @@ define(["logger","text!qunit.css","qunit"],function(logger,css) {
 
 		if(test_enabled()) {
 			// run tests
-			logger.info("running tests for: " + module_name);
+			logger.debug("running tests for: " + module_name);
 			setup_qunit();
 			//require each test separately and asynchronously
 			var mod_test_name = test_module_name || module_test_url + module_name + "_tests";
@@ -45,7 +45,7 @@ define(["logger","text!qunit.css","qunit"],function(logger,css) {
 	var setup_qunit = function() {
 		// only one container on the page, crawl the DOM once
 		if (jQuery("#qunit_container").length === 0) {
-			console.info("setting up manager");
+			logger.debug("setting up manager");
 			var qunitContainer = document.createElement("div");
 			qunitContainer.id = "qunit_container";
 			jQuery(qunitContainer).append(
@@ -65,7 +65,6 @@ define(["logger","text!qunit.css","qunit"],function(logger,css) {
 	
 	/**
 	* Test to see if testing funtionality is on.
-	* @memberOf manager
 	* @returns {Boolean} If true, run tests on modules.
 	*/
 	var test_enabled = function() {
