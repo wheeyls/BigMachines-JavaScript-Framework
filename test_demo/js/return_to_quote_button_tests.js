@@ -1,4 +1,4 @@
-define(["return_to_quote_button", "jquery.cookie"],function(rtq) {
+define(["return_to_quote_button", "test_util", "jquery.cookie"],function(rtq,test_util) {
 	var tests = {};
 	
 	tests.run_tests = function(test_fixture) {
@@ -29,6 +29,9 @@ define(["return_to_quote_button", "jquery.cookie"],function(rtq) {
 			rtq.add_button_to_homepage(rtq.v10_homepage_callback,contextID);
 			ok(jQuery("#rtq_li",contextID).length > 0, "This button will only ever pass on a v10 and below Homepage.");
 		});
+		
+		module("UI Testing");
+		test_util.border_test("#rtq_link","Return to Quote");
 
 		var id = document.getElementsByName("id")[0];
 		if(id) {
