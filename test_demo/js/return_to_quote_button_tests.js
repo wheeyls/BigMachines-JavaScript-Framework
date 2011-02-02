@@ -1,12 +1,12 @@
 define(["return_to_quote_button", "jquery.cookie"],function(rtq) {
 	var tests = {};
 	
-	tests.run_tests = function() {
+	tests.run_tests = function(test_fixture) {
 		module("Homepage functions: Quickstart 11.");
 		test("adding button v11 homepage",function() {
 			var context = "v11test";
 			var contextID = "#" + context;
-			jQuery("#qunit-fixture").append("<div id='" + context +"'>" +
+			jQuery(test_fixture).append("<div id='" + context +"'>" +
 												"<div class='return-to-quote'></div>" +
 											"</div>");
 			rtq.add_button_to_homepage(null,contextID);
@@ -21,7 +21,7 @@ define(["return_to_quote_button", "jquery.cookie"],function(rtq) {
 		test("adding button v10 homepage",function() {
 			var context = "v10test";
 			var contextID = "#" + context;
-			jQuery("#qunit-fixture").append("<div id='" + context +"'>" +
+			jQuery(test_fixture).append("<div id='" + context +"'>" +
 												"<div id='mainnav'>" +
 													"<ul/>" +
 												"</div>" +
@@ -37,8 +37,6 @@ define(["return_to_quote_button", "jquery.cookie"],function(rtq) {
 				rtq.set_cookie_in_commerce();
 
 				var cook = jQuery.cookie("last_transaction");
-
-				//var id = document.getElementsByName("id")[0];
 				var test = cook.indexOf(id.value) > 0;
 				ok(test, "Cookie contains this quote's BS_ID");
 			});

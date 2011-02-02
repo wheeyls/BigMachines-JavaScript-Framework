@@ -32,7 +32,7 @@ define(["logger","text!qunit.css","qunit"],function(logger,css) {
 			//require each test separately and asynchronously
 			var mod_test_name = test_module_name || module_test_url + module_name + "_tests";
 			require([mod_test_name], function(test) {
-				test.run_tests();
+				test.run_tests("#qunit-fixture");
 			});
 			
 		}
