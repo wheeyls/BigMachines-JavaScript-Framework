@@ -1,4 +1,4 @@
-define(["commerce_ids","jquery"],function(c_ids,$) {
+define(["commerce_ids"],function(c_ids) {
 	var tests = {};
 	
 	tests.run_tests = function() {
@@ -18,13 +18,13 @@ define(["commerce_ids","jquery"],function(c_ids,$) {
 		});
 		
 		test("id from fixture",function() {
-			$("body").append("<div id='commerce_ids_test'>" +
+			jQuery("body").append("<div id='commerce_ids_test'>" +
 								"<input type='hidden' name='document_id' value='1'/>" +
 								"<input type='hidden' name='version_id' value='2'/>" +
 								"<input type='hidden' name='id' value='3'/>" +
 							"</div>");
 			test_ids();
-			$("#commerce_ids_test").remove();
+			jQuery("#commerce_ids_test").remove();
 		});
 	}
 	

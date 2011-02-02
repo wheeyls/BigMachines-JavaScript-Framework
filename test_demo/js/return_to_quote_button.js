@@ -8,7 +8,7 @@
   * @requires commerce_ids
   * @requires jquery.cookie
   **/
-define(["jquery", "commerce_ids", "jquery.cookie"], function($, c_ids) {
+define(["commerce_ids", "jquery.cookie"], function(c_ids) {
   var return_to_quote_button = {};
 
   /**
@@ -22,7 +22,7 @@ define(["jquery", "commerce_ids", "jquery.cookie"], function($, c_ids) {
    * @param callback(urlToQuote) {Function} Optional. If included, then this callback will be called instead of showing the default return to quote element
    */
   return_to_quote_button.add_button_to_homepage = function(callback) {
-    var last_trans_cookie = $.cookie("last_transaction");
+    var last_trans_cookie = jQuery.cookie("last_transaction");
 		//if cookie is set add functionality to link
 		if( last_trans_cookie !== null && last_trans_cookie !== "" && last_trans_cookie !== "-1" ) {
 			var url = '/commerce/buyside/document.jsp?formaction=performAction&';
@@ -30,15 +30,15 @@ define(["jquery", "commerce_ids", "jquery.cookie"], function($, c_ids) {
 
       //version 11 default behavior
 		  if(typeof callback !== "function") {
-			  $(".return-to-quote").attr("href", url);
-			  $(".return-to-quote").show();
+			  jQuery(".return-to-quote").attr("href", url);
+			  jQuery(".return-to-quote").show();
 			  
 			  //parts search doesn't exist (this class is set condtionally in xsl)
-			  if($(".return-to-quote-wrapper").length){
-				  $(".return-to-quote-wrapper").show();
+			  if(jQuery(".return-to-quote-wrapper").length){
+				  jQuery(".return-to-quote-wrapper").show();
 			  }
 			  else{ //parts search exists
-				  $(".return-to-quote-pipe").show();
+				  jQuery(".return-to-quote-pipe").show();
 			  }
       } else {
         callback(url);
@@ -64,7 +64,7 @@ define(["jquery", "commerce_ids", "jquery.cookie"], function($, c_ids) {
 		// Check if the last_transaction has an id
 		// sets last_transaction cookie if last_transaction var is populated
 		if(last_transaction.length !== 0){
-			$.cookie("last_transaction",last_transaction, {path: '/'}); 
+			jQuery.cookie("last_transaction",last_transaction, {path: '/'}); 
 		}
   };
 
@@ -78,7 +78,7 @@ define(["jquery", "commerce_ids", "jquery.cookie"], function($, c_ids) {
    */
   return_to_quote_button.v10_homepage_callback = function(url) {
     //we're going to attach it to the mainnav as a list item
-    var parent_node = $("#mainnav > ul");
+    var parent_node = jQuery("#mainnav > ul");
 
 	  // the return to quote button is a link nested inside an li element with some styling
     var child_node = "<li id='rtq_li'> <a id='rtq_link'href='"+url+"'>";

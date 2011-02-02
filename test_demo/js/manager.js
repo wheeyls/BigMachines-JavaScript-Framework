@@ -6,7 +6,7 @@
 * @requires qunit
 * @constructor
 */
-define(["jquery","logger","text!qunit.css","qunit"],function($,logger,css) {
+define(["logger","text!qunit.css","qunit"],function(logger,css) {
 	// define as global to create a singleton
 	// manager = manager || {};
 	var manager = {};
@@ -43,21 +43,21 @@ define(["jquery","logger","text!qunit.css","qunit"],function($,logger,css) {
 	*/
 	var setup_qunit = function() {
 		// only one container on the page, crawl the DOM once
-		if ($("#qunit_container").length === 0) {
+		if (jQuery("#qunit_container").length === 0) {
 			console.info("setting up manager");
 			var qunitContainer = document.createElement("div");
 			qunitContainer.id = "qunit_container";
-			$(qunitContainer).append(
+			jQuery(qunitContainer).append(
 									"<h1 id='qunit-header'>Javascript Testing</h1>" + 
 									"<h2 id='qunit-banner'></h2>" +
 									"<h2 id='qunit-userAgent'></h2>" +
 									"<ol id='qunit-tests'></ol>" +
 									"<div id='qunit-fixture'>test markup, will be hidden</div>"
 									);
-			$("body").append(qunitContainer);
+			jQuery("body").append(qunitContainer);
 			
 			// css
-			$("head").append("<style>" + css + "</style>");
+			jQuery("head").append("<style>" + css + "</style>");
 		}
 		return;
 	}
@@ -74,7 +74,7 @@ define(["jquery","logger","text!qunit.css","qunit"],function($,logger,css) {
 		if(user_set) {
 		
 			// flag set in header/footer: 
-			var flag_set = $("#mod_mgr_run_tests").attr("value") === "true";
+			var flag_set = jQuery("#mod_mgr_run_tests").attr("value") === "true";
 			if(flag_set) {
 				return true;
 			}
