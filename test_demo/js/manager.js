@@ -2,11 +2,10 @@
 * @namespace Manages common BigMachines modules
 * @name manager
 * @requires jquery
-* @requires logger
 * @requires qunit
 * @constructor
 */
-define(["jquery","logger","qunit"],function($,logger) {
+define(["jquery","qunit"],function($) {
 	// define as global to create a singleton
 	// manager = manager || {};
 	var manager = {};
@@ -35,7 +34,6 @@ define(["jquery","logger","qunit"],function($,logger) {
 			});
 			
 		}
-		logger.debug("registered " + module_name + ". All Modules: " + modules);
 	};
 	
 	/** 
@@ -44,7 +42,6 @@ define(["jquery","logger","qunit"],function($,logger) {
 	var setup_qunit = function() {
 		// only one container on the page, crawl the DOM once
 		if ($("#qunit_container").length === 0) {
-			console.info("setting up manager");
 			var qunitContainer = document.createElement("div");
 			qunitContainer.id = "qunit_container";
 			$(qunitContainer).append(
@@ -66,7 +63,7 @@ define(["jquery","logger","qunit"],function($,logger) {
 	*/
 	manager.test_enabled = function() {
 		// run tests only if the user is superuser
-		var user_set = typeof _BM_USER_LOGIN ==="undefined" || _BM_USER_LOGIN === "superuser";
+		var user_set = typeof _BM_USER_LOGIN ==="undefined" || _BM_USER_LOGIN === "superuser" || _BM_USER_LOGIN === "mwheeler";
 		
 		if(user_set) {
 		
