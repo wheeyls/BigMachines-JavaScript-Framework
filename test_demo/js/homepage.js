@@ -4,11 +4,11 @@
  */
 require(["return_to_quote_button"], function(rtq) {
   /*
-   * Put all functions for commerce here
+   * Put all functions for homepage here
    */
 
   //this function runs when the page loads
   require.ready(function() {
-	rtq.set_cookie_in_commerce();
+	rtq.add_button_to_homepage(rtq.v10_homepage_callback);
   });
 });

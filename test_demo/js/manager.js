@@ -5,7 +5,7 @@
 * @requires qunit
 * @constructor
 */
-define(["jquery","qunit"],function($) {
+define(["logger","text!qunit.css","qunit"],function(logger,css) {
 	// define as global to create a singleton
 	// manager = manager || {};
 	var manager = {};
@@ -24,13 +24,14 @@ define(["jquery","qunit"],function($) {
 	manager.register = function(module_name,test_module_name) {
 		modules.push(module_name);
 
-		if(manager.test_enabled()) {
+		if(test_enabled()) {
 			// run tests
+			logger.info("running tests for: " + module_name);
 			setup_qunit();
 			//require each test separately and asynchronously
 			var mod_test_name = test_module_name || module_test_url + module_name + "_tests";
 			require([mod_test_name], function(test) {
-				test.run_tests();
+				test.run_tests("#qunit-fixture");
 			});
 			
 		}
@@ -41,17 +42,20 @@ define(["jquery","qunit"],function($) {
 	*/
 	var setup_qunit = function() {
 		// only one container on the page, crawl the DOM once
-		if ($("#qunit_container").length === 0) {
+		if (jQuery("#qunit_container").length === 0) {
 			var qunitContainer = document.createElement("div");
 			qunitContainer.id = "qunit_container";
-			$(qunitContainer).append(
+			jQuery(qunitContainer).append(
 									"<h1 id='qunit-header'>Javascript Testing</h1>" + 
 									"<h2 id='qunit-banner'></h2>" +
 									"<h2 id='qunit-userAgent'></h2>" +
 									"<ol id='qunit-tests'></ol>" +
 									"<div id='qunit-fixture'>test markup, will be hidden</div>"
 									);
-			$("body").append(qunitContainer);
+			jQuery("body").append(qunitContainer);
+			
+			// css
+			jQuery("head").append("<style>" + css + "</style>");
 		}
 		return;
 	}
@@ -61,14 +65,14 @@ define(["jquery","qunit"],function($) {
 	* @memberOf manager
 	* @returns {Boolean} If true, run tests on modules.
 	*/
-	manager.test_enabled = function() {
+	var test_enabled = function() {
 		// run tests only if the user is superuser
 		var user_set = typeof _BM_USER_LOGIN ==="undefined" || _BM_USER_LOGIN === "superuser" || _BM_USER_LOGIN === "mwheeler";
 		
 		if(user_set) {
 		
 			// flag set in header/footer: 
-			var flag_set = $("#mod_mgr_run_tests").attr("value") === "true";
+			var flag_set = jQuery("#mod_mgr_run_tests").attr("value") === "true";
 			if(flag_set) {
 				return true;
 			}

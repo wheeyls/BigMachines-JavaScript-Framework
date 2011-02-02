@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - test_mod2</title>
+		<title>JsDoc Reference - return_to_quote_button</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -214,7 +214,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace test_mod2
+				Namespace return_to_quote_button
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -222,16 +222,16 @@ ul.inheritsList
 				
 				
 			
-				A second module to test the module framework
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/js__test_mod2.js.html">test_mod2.js</a>.
+				
+					<br /><i>Defined in: </i> <a href="../symbols/src/js__return_to_quote_button.js.html">return_to_quote_button.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class test_mod2.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class return_to_quote_button.">
 				<caption>Namespace Summary</caption>
 				<thead>
 					<tr>
@@ -244,9 +244,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/test_mod2.html#constructor">test_mod2</a></b>
+								<b><a href="../symbols/return_to_quote_button.html#constructor">return_to_quote_button</a></b>
 							</div>
-							<div class="description"></div>
+							<div class="description">A module to add a "Return To Quote" button on the homepage, based on a recent quote.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -260,7 +260,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class test_mod2.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class return_to_quote_button.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -273,9 +273,27 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">test_mod2.<b><a href="../symbols/test_mod2.html#.test_func">test_func</a></b>()
+								<div class="fixedFont">return_to_quote_button.<b><a href="../symbols/return_to_quote_button.html#.add_button_to_homepage">add_button_to_homepage</a></b>(callback(urlToQuote), context)
 								</div>
-								<div class="description">Test func returns false</div>
+								<div class="description">Called from homepage.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">return_to_quote_button.<b><a href="../symbols/return_to_quote_button.html#.set_cookie_in_commerce">set_cookie_in_commerce</a></b>()
+								</div>
+								<div class="description">Called from commerce.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">return_to_quote_button.<b><a href="../symbols/return_to_quote_button.html#.v10_homepage_callback">v10_homepage_callback</a></b>(url, context)
+								</div>
+								<div class="description">Callback to be passed into add_button_to_homepage.</div>
 							</td>
 						</tr>
 					
@@ -296,11 +314,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>test_mod2</b>
+						<b>return_to_quote_button</b>
 				</div>
 				
 				<div class="description">
-					
+					A module to add a "Return To Quote" button on the homepage, based on a recent quote.
 					
 				</div>
 				
@@ -318,6 +336,8 @@ ul.inheritsList
 						
 							<dd><a href="../symbols/manager.html">manager</a></dd>
 						
+							<dd><a href="../symbols/jquery.cookie.html">jquery.cookie</a></dd>
+						
 						</dl>
 					
 					
@@ -334,32 +354,120 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name=".test_func"> </a>
+					<a name=".add_button_to_homepage"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					<span class="light">{Boolean}</span>
-					<span class="light">test_mod2.</span><b>test_func</b>()
+					
+					<span class="light">return_to_quote_button.</span><b>add_button_to_homepage</b>(callback(urlToQuote), context)
 					
 					</div>
 					<div class="description">
-						Test func returns false
+						Called from homepage. Shows a return to quote button on the page, contingenton a cookie created by set_cookie_in_commerce.Works out of the box with Quickstart Version 11. With older versions, you have to include a callbackto build the element for you.
 						
 						
 					</div>
 					
 					
 					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>callback(urlToQuote)</b>
+									
+								</dt>
+								<dd>{Function} Optional. If included, then this callback will be called instead of showing the default return to quote element</dd>
+							
+								<dt>
+									<b>context</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".set_cookie_in_commerce"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">return_to_quote_button.</span><b>set_cookie_in_commerce</b>()
+					
+					</div>
+					<div class="description">
+						Called from commerce. Sets a cookie used to Return to Quote from homepage.
+						
+						
+					</div>
+					
+					
+					
+						
 						
 						
 						
 						
 						
 							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
+							<dt class="heading">Requires:</dt>
 							
-								<dd><span class="light fixedFont">{Boolean}</span> false</dd>
+								<dd>commerce_ids</dd>
 							
 							</dl>
+						
+						
+
+					<hr />
+				
+					<a name=".v10_homepage_callback"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">return_to_quote_button.</span><b>v10_homepage_callback</b>(url, context)
+					
+					</div>
+					<div class="description">
+						Callback to be passed into add_button_to_homepage. Creates an element on the page to return to quote.
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code">rtq.add_button_to_homepage(rtq.v10_homepage_callback);</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>url</b>
+									
+								</dt>
+								<dd>{String} The relative url of a quote to be returned to</dd>
+							
+								<dt>
+									<b>context</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
 						
 						
 						

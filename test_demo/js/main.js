@@ -5,7 +5,7 @@
  * @version 1.0
  */
 
-require(["logger","test_mod","test_mod2"],function(logger,test_mod,tm2) {
+require(["logger","test_mod","test_mod2","commerce_ids"],function(logger,test_mod,tm2) {
 	require.ready(function() {
 		//This function is called when the page is loaded (the DOMContentLoaded
 		//event) and when all required scripts are loaded.
