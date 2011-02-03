@@ -1,4 +1,4 @@
-define(["commerce_ids"],function(c_ids) {
+define(["mod/commerce_ids"],function(c_ids) {
 	var tests = {};
 	
 	tests.run_tests = function() {
