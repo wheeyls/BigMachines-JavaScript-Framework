@@ -72,7 +72,7 @@ define([],function(mgr) {
 		logger.info("info");
 		logger.warn("warning");
 		//logger.error("error");
-		logger.info("initialized logger");
+		logger.debug("initialized logger");
 	}
 	
 	test();
