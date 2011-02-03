@@ -75,7 +75,5 @@ define([],function(mgr) {
 		logger.debug("initialized logger");
 	}
 	
-	test();
-	
 	return logger;
 });
