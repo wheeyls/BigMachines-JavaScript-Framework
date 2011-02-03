@@ -6,8 +6,8 @@
  */
 
 require(["manager","logger","jquery.cookie"],function(mgr,logger) {
-	mgr.load(["mod/test_mod"],function(test_mod) {
-		mgr.load(["mod/test_mod2"],function(tm2) {
+	mgr.load(["mod/test_mod","mod/test_mod2"],function(test_mod,tm2) {
+		//mgr.load(["mod/test_mod2"],function(tm2) {
 			require.ready(function() {
 				//This function is called when the page is loaded (the DOMContentLoaded
 				//event) and when all required scripts are loaded.
@@ -29,6 +29,6 @@ require(["manager","logger","jquery.cookie"],function(mgr,logger) {
 				//});
 				
 			});
-		});
+		//});
 	});
 });

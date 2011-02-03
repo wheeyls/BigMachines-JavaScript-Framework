@@ -39,9 +39,7 @@ define(["text!qunit.css","paths","logger","qunit"],function(css,paths,logger) {
 	manager.load = function(module_names,callback) {
 		logger.debug("loading " + module_names);
 		logger.debug("mod paths: " + paths.mod);
-		require({ paths: paths },module_names,function(module) {
-			callback(module);
-		});
+		require({ paths: paths },module_names,callback);
 	}
 	
 	/** 
