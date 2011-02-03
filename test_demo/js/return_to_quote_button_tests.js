@@ -7,14 +7,14 @@ define(["return_to_quote_button", "test_util", "jquery.cookie"],function(rtq,tes
 			var context = "v11test";
 			var contextID = "#" + context;
 			jQuery(test_fixture).append("<div id='" + context +"'>" +
-												"<div class='return-to-quote'></div>" +
+												"<div class='return-to-quote' style='display:none'></div>" +
 											"</div>");
 			rtq.add_button_to_homepage(null,contextID);
 			var test = false;
 			if(jQuery(".return-to-quote",contextID).length > 0) {
-				test = jQuery(".return-to-quote",contextID).is(":visible");
+				ok(jQuery(".return-to-quote",contextID).is(":visible"),"Return to quote should be visible");
+				ok(jQuery(".return-to-quote",contextID).attr("href"),"Return to quote should have href property");
 			}
-			ok(test,"This test will only ever pass on a v11 Homepage.");
 		});
 
 		module("Homepage functions: Quickstart 10.");
@@ -27,7 +27,7 @@ define(["return_to_quote_button", "test_util", "jquery.cookie"],function(rtq,tes
 												"</div>" +
 											"</div>");
 			rtq.add_button_to_homepage(rtq.v10_homepage_callback,contextID);
-			ok(jQuery("#rtq_li",contextID).length > 0, "This button will only ever pass on a v10 and below Homepage.");
+			ok(jQuery("#rtq_li",contextID).length > 0, "#rtq_li should exist");
 		});
 		
 		module("UI Testing");
@@ -41,7 +41,7 @@ define(["return_to_quote_button", "test_util", "jquery.cookie"],function(rtq,tes
 
 				var cook = jQuery.cookie("last_transaction");
 				var test = cook.indexOf(id.value) > 0;
-				ok(test, "Cookie contains this quote's BS_ID");
+				ok(test, "Cookie should contain this quote's BS_ID");
 			});
 		}
 	}
