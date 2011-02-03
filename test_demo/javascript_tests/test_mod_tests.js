@@ -1,4 +1,4 @@
-define(["test_mod"],function(test_mod) {
+define(["mod/test_mod"],function(test_mod) {
 	var tests = {};
 	
 	tests.run_tests = function() {
