@@ -2,11 +2,10 @@
 * @namespace Manages common BigMachines modules
 * @name manager
 * @requires jquery
-* @requires logger
 * @requires qunit
 * @constructor
 */
-define(["logger","text!qunit.css","qunit"],function(logger,css) {
+define(["text!qunit.css","qunit"],function(css) {
 	// define as global to create a singleton
 	// manager = manager || {};
 	var manager = {};
@@ -27,7 +26,6 @@ define(["logger","text!qunit.css","qunit"],function(logger,css) {
 
 		if(test_enabled()) {
 			// run tests
-			logger.debug("running tests for: " + module_name);
 			setup_qunit();
 			//require each test separately and asynchronously
 			var mod_test_name = test_module_name || module_test_url + module_name + "_tests";
@@ -36,7 +34,6 @@ define(["logger","text!qunit.css","qunit"],function(logger,css) {
 			});
 			
 		}
-		logger.debug("registered " + module_name + ". All Modules: " + modules);
 	};
 	
 	/** 
@@ -45,7 +42,6 @@ define(["logger","text!qunit.css","qunit"],function(logger,css) {
 	var setup_qunit = function() {
 		// only one container on the page, crawl the DOM once
 		if (jQuery("#qunit_container").length === 0) {
-			logger.debug("setting up manager");
 			var qunitContainer = document.createElement("div");
 			qunitContainer.id = "qunit_container";
 			jQuery(qunitContainer).append(
