@@ -2,8 +2,7 @@
 * @namespace A utility for logging messages to the console
 * @name logger
 */
-define([],function(mgr) {
-	//mgr.register("logger");
+define([],function() {
 	
 	var logger = {};
 	
