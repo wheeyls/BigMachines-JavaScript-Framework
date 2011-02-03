@@ -9,7 +9,7 @@ define([],function(mgr) {
 	
 	var loglevels = { error: 0, warn: 1, info: 2, debug: 3 };
 	var loglevel = loglevels.debug;
-	
+
 	/**
 	* Set the logger's log level. If the logger's log level is less than the level of the message, the message will not be displayed. e.g. logger.warn will be displayed if logger's level is warn, info, or debug.
 	* @memberOf logger
@@ -25,6 +25,7 @@ define([],function(mgr) {
 	* @param str {String}: The string to write
 	*/
 	logger.debug = function(str) {
+		if(typeof console !== 'object') {return;}
 		if(loglevel >= loglevels.debug) {
 			console.debug(str);
 		}
@@ -36,6 +37,7 @@ define([],function(mgr) {
 	* @param str {String}: The string to write
 	*/
 	logger.info = function(str) {
+		if(typeof console !== 'object') {return;}
 		if(loglevel >= loglevels.info) {
 			console.info(str);
 		}
@@ -47,6 +49,7 @@ define([],function(mgr) {
 	* @param str {String}: The string to write
 	*/
 	logger.warn = function(str) {
+		if(typeof console !== 'object') {return;}
 		if(loglevel >= loglevels.warn) {
 			console.warn(str);
 		}
@@ -58,7 +61,8 @@ define([],function(mgr) {
 	* @param str {String}: The string to write
 	*/
 	logger.error = function(str) {
-		if(loglevel >= loglevels.err) {
+		if(typeof console !== 'object') {return;}
+		if(loglevel >= loglevels.error) {
 			console.error(str);
 		}
 	}
@@ -70,8 +74,6 @@ define([],function(mgr) {
 		//logger.error("error");
 		logger.debug("initialized logger");
 	}
-	
-	test();
 	
 	return logger;
 });

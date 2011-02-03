@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - return_to_quote_button</title>
+		<title>JsDoc Reference - test_util</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -216,7 +216,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace return_to_quote_button
+				Namespace test_util
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -224,16 +224,16 @@ ul.inheritsList
 				
 				
 			
+				test_util - helpful features for creating tests
 				
 				
-				
-					<br /><i>Defined in: </i> <a href="../symbols/src/js__return_to_quote_button.js.html">return_to_quote_button.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/js__test_util.js.html">test_util.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class return_to_quote_button.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class test_util.">
 				<caption>Namespace Summary</caption>
 				<thead>
 					<tr>
@@ -246,9 +246,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/return_to_quote_button.html#constructor">return_to_quote_button</a></b>
+								<b><a href="../symbols/test_util.html#constructor">test_util</a></b>
 							</div>
-							<div class="description">A module to add a "Return To Quote" button on the homepage, based on a recent quote.</div>
+							<div class="description"></div>
 						</td>
 					</tr>
 				</tbody>
@@ -262,7 +262,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class return_to_quote_button.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class test_util.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -275,27 +275,27 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">return_to_quote_button.<b><a href="../symbols/return_to_quote_button.html#.add_button_to_homepage">add_button_to_homepage</a></b>(callback(urlToQuote), context)
+								<div class="fixedFont">test_util.<b><a href="../symbols/test_util.html#.apply_border">apply_border</a></b>(elem, color)
 								</div>
-								<div class="description">Called from homepage.</div>
+								<div class="description">Add a border of the specified {color} to {elem}</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">return_to_quote_button.<b><a href="../symbols/return_to_quote_button.html#.set_cookie_in_commerce">set_cookie_in_commerce</a></b>()
+								<div class="fixedFont">test_util.<b><a href="../symbols/test_util.html#.border_test">border_test</a></b>(elem, testName, color)
 								</div>
-								<div class="description">Called from commerce.</div>
+								<div class="description">Generates a qunit test that verifies that at least one of {elem} exists and applies a border</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">return_to_quote_button.<b><a href="../symbols/return_to_quote_button.html#.v10_homepage_callback">v10_homepage_callback</a></b>(url, context)
+								<div class="fixedFont">test_util.<b><a href="../symbols/test_util.html#.generateRandomColor">generateRandomColor</a></b>()
 								</div>
-								<div class="description">Callback to be passed into add_button_to_homepage.</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
@@ -316,11 +316,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>return_to_quote_button</b>
+						<b>test_util</b>
 				</div>
 				
 				<div class="description">
-					A module to add a "Return To Quote" button on the homepage, based on a recent quote.
+					
 					
 				</div>
 				
@@ -332,15 +332,6 @@ ul.inheritsList
 					
 					
 					
-					
-						<dl class="detailList">
-						<dt class="heading">Requires:</dt>
-						
-							<dd><a href="../symbols/manager.html">manager</a></dd>
-						
-							<dd><a href="../symbols/jquery.cookie.html">jquery.cookie</a></dd>
-						
-						</dl>
 					
 					
 
@@ -356,15 +347,15 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name=".add_button_to_homepage"> </a>
+					<a name=".apply_border"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">return_to_quote_button.</span><b>add_button_to_homepage</b>(callback(urlToQuote), context)
+					<span class="light">test_util.</span><b>apply_border</b>(elem, color)
 					
 					</div>
 					<div class="description">
-						Called from homepage. Shows a return to quote button on the page, contingenton a cookie created by set_cookie_in_commerce.Works out of the box with Quickstart Version 11. With older versions, you have to include a callbackto build the element for you.
+						Add a border of the specified {color} to {elem}
 						
 						
 					</div>
@@ -376,16 +367,16 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>callback(urlToQuote)</b>
+									<b>elem</b>
 									
 								</dt>
-								<dd>{Function} Optional. If included, then this callback will be called instead of showing the default return to quote element</dd>
+								<dd>The element to apply the border to</dd>
 							
 								<dt>
-									<b>context</b>
+									<b>color</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The color of the border</dd>
 							
 							</dl>
 						
@@ -398,54 +389,18 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".set_cookie_in_commerce"> </a>
+					<a name=".border_test"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">return_to_quote_button.</span><b>set_cookie_in_commerce</b>()
+					<span class="light">test_util.</span><b>border_test</b>(elem, testName, color)
 					
 					</div>
 					<div class="description">
-						Called from commerce. Sets a cookie used to Return to Quote from homepage.
+						Generates a qunit test that verifies that at least one of {elem} exists and applies a border
 						
 						
 					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Requires:</dt>
-							
-								<dd>commerce_ids</dd>
-							
-							</dl>
-						
-						
-
-					<hr />
-				
-					<a name=".v10_homepage_callback"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">return_to_quote_button.</span><b>v10_homepage_callback</b>(url, context)
-					
-					</div>
-					<div class="description">
-						Callback to be passed into add_button_to_homepage. Creates an element on the page to return to quote.
-						
-						
-					</div>
-					
-					
-					
-					<pre class="code">rtq.add_button_to_homepage(rtq.v10_homepage_callback);</pre>
 					
 					
 					
@@ -454,18 +409,49 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>url</b>
+									<b>elem</b>
 									
 								</dt>
-								<dd>{String} The relative url of a quote to be returned to</dd>
+								<dd>The element to apply the border to</dd>
 							
 								<dt>
-									<b>context</b>
+									<b>testName</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The text used to identify the test</dd>
+							
+								<dt>
+									<b>color</b>
+									
+								</dt>
+								<dd>(Optional) The color of the border</dd>
 							
 							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".generateRandomColor"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">test_util.</span><b>generateRandomColor</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
 						
 						
 						

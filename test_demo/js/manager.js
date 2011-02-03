@@ -65,7 +65,7 @@ define(["text!qunit.css","qunit"],function(css) {
 	*/
 	var test_enabled = function() {
 		// run tests only if the user is superuser
-		var user_set = typeof _BM_USER_LOGIN ==="undefined" || _BM_USER_LOGIN === "superuser";
+		var user_set = typeof _BM_USER_LOGIN ==="undefined" || _BM_USER_LOGIN === "superuser" || _BM_USER_LOGIN === "mwheeler";
 		
 		if(user_set) {
 		

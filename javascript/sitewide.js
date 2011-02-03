@@ -2,13 +2,13 @@
  * @param dependencies {Array} name of modules this code depends on. Can exclude ".js"
  * @param callback {Function} function containing this module's functionality.
  */
-require(["return_to_quote_button"], function(rtq) {
+require([], function() {
   /*
-   * Put all functions for homepage here
+   * Put all functions for sitewide javascript here
    */
 
-  //this function runs when the page loads
+
+  //this function runs when the page is loaded
   require.ready(function() {
-	rtq.add_button_to_homepage();
   });
 });
