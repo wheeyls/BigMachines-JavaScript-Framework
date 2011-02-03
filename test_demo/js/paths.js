@@ -4,6 +4,6 @@
 */
 define(function() {
 	return {
-		tests: "../js_tests",
+		tests: "../javascript_tests",
 	}
 });
