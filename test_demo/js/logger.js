@@ -62,7 +62,7 @@ define([],function(mgr) {
 	*/
 	logger.error = function(str) {
 		if(typeof console !== 'object') {return;}
-		if(loglevel >= loglevels.err) {
+		if(loglevel >= loglevels.error) {
 			console.error(str);
 		}
 	}
