@@ -5,8 +5,8 @@
  * @version 1.0
  */
 
-require(["paths"],function(paths) {
-	require({ paths: paths },["logger","mod/test_mod","mod/test_mod2","mod/return_to_quote_button","jquery.cookie"],function(logger,test_mod,tm2,rtq) {
+require(["manager"],function(mgr) {
+	mgr.load("test_mod",function() {
 		require.ready(function() {
 			//This function is called when the page is loaded (the DOMContentLoaded
 			//event) and when all required scripts are loaded.
@@ -24,7 +24,7 @@ require(["paths"],function(paths) {
 			//});
 			
 			//require(["test_mod2"],function(tm2) {
-				logger.info("test_mod2 test_func returns: " + tm2.test_func());
+				//logger.info("test_mod2 test_func returns: " + tm2.test_func());
 			//});
 			
 		});

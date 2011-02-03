@@ -36,6 +36,12 @@ define(["text!qunit.css","qunit"],function(css) {
 		}
 	};
 	
+	manager.load = function(module_name,callback) {
+		require([module_name],function(module) {
+			callback(module);
+		});
+	}
+	
 	/** 
 	* Adds the qunit test results/CSS to the page
 	*/
