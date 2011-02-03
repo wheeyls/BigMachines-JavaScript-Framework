@@ -29,7 +29,7 @@ define(["text!qunit.css","qunit"],function(css) {
 			setup_qunit();
 			//require each test separately and asynchronously
 			var mod_test_name = test_module_name || module_test_url + module_name + "_tests";
-			require([mod_test_name], function(test) {
+			require(["tests/" + mod_test_name], function(test) {
 				test.run_tests("#qunit-fixture");
 			});
 			
