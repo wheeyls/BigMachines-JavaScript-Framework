@@ -4,10 +4,7 @@
 */
 define(function() {
 	return {
-		mod: "../modules",
-		tests: "../js_tests",
-		commerce: "../commerce_javascript",
-		config: "../config_javascript",
-		global: "../global_javascript",
+		mod: "../javascript_modules",
+		tests: "../javascript_tests",
 	}
 });
