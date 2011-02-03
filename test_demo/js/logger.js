@@ -25,7 +25,7 @@ define([],function(mgr) {
 	* @param str {String}: The string to write
 	*/
 	logger.debug = function(str) {
-		if(typeof console !== 'Object') {return;}
+		if(typeof console !== 'object') {return;}
 		if(loglevel >= loglevels.debug) {
 			console.debug(str);
 		}
@@ -37,7 +37,7 @@ define([],function(mgr) {
 	* @param str {String}: The string to write
 	*/
 	logger.info = function(str) {
-		if(typeof console !== 'Object') {return;}
+		if(typeof console !== 'object') {return;}
 		if(loglevel >= loglevels.info) {
 			console.info(str);
 		}
@@ -49,7 +49,7 @@ define([],function(mgr) {
 	* @param str {String}: The string to write
 	*/
 	logger.warn = function(str) {
-		if(typeof console !== 'Object') {return;}
+		if(typeof console !== 'object') {return;}
 		if(loglevel >= loglevels.warn) {
 			console.warn(str);
 		}
@@ -61,7 +61,7 @@ define([],function(mgr) {
 	* @param str {String}: The string to write
 	*/
 	logger.error = function(str) {
-		if(typeof console !== 'Object') {return;}
+		if(typeof console !== 'object') {return;}
 		if(loglevel >= loglevels.err) {
 			console.error(str);
 		}
