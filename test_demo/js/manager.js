@@ -5,7 +5,7 @@
 * @requires qunit
 * @constructor
 */
-define(["text!qunit.css","qunit"],function(css) {
+define(["text!qunit.css","paths","qunit"],function(css,paths) {
 	// define as global to create a singleton
 	// manager = manager || {};
 	var manager = {};
@@ -29,7 +29,7 @@ define(["text!qunit.css","qunit"],function(css) {
 			setup_qunit();
 			//require each test separately and asynchronously
 			var mod_test_name = test_module_name || module_test_url + module_name + "_tests";
-			require([mod_test_name], function(test) {
+			require({ paths: paths },[mod_test_name], function(test) {
 				test.run_tests("#qunit-fixture");
 			});
 			
