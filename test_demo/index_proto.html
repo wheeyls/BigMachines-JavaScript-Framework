@@ -1,0 +1,17 @@
+<html>
+	<head>
+		<script src="js/prototype.js"></script>
+		<script src="js/allplugins-require.js" type="text/javascript" data-main="main-jq"></script>
+		
+		<!--link rel="stylesheet" href="js/qunit.css"></link-->
+		<title>Prototype only</title>
+	</head>
+	<body>
+		<p>Some content.</p>
+		<input type="hidden" id="mod_mgr_run_tests" value="true"/>
+		<div id="proto_div"></div>
+		<script type="text/javascript">
+			$("proto_div").replace("hi from prototype; version is: " + Prototype.Version);
+		</script>
+	</body>
+</html>
