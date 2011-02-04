@@ -1,7 +1,7 @@
 define(function() {
 	return {
 		paths: {
-			tests: "../javascript_tests",
+			tests: ".",
 			mod: "../javascript_modules"
 		}
 	}

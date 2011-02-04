@@ -5,9 +5,7 @@
 * @requires qunit
 * @constructor
 */
-define(["text!qunit.css","logger","qunit"],function(css,logger) {
-	// define as global to create a singleton
-	// manager = manager || {};
+define(["text!qunit.css","logger","require_config","qunit","jquery.cookie"],function(css,logger,cfg) {
 	var manager = {};
 
 	var modules = [];
@@ -25,11 +23,13 @@ define(["text!qunit.css","logger","qunit"],function(css,logger) {
 		modules.push(module_name);
 
 		if(test_enabled()) {
+			
 			// run tests
 			setup_qunit();
 			//require each test separately and asynchronously
 			var mod_test_name = test_module_name || module_test_url + module_name + "_tests";
-			require(["tests/" + mod_test_name], function(test) {
+			logger.debug("loading test for " + mod_test_name);
+			require(cfg,["tests/" + mod_test_name], function(test) {
 				test.run_tests("#qunit-fixture");
 			});
 			

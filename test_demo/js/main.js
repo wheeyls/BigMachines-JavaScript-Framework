@@ -5,8 +5,8 @@
  * @version 1.0
  */
 
-require(["require_config"],function(cfg) {
-	require(cfg,["logger","mod/test_mod","mod/test_mod2","mod/return_to_quote_button","jquery.cookie"],function(logger,test_mod,tm2,rtq) {
+//require(["require_config"],function(cfg) {
+	require(/*cfg,*/["logger","test_mod","test_mod2","return_to_quote_button","jquery.cookie"],function(logger,test_mod,tm2,rtq) {
 		require.ready(function() {
 			//This function is called when the page is loaded (the DOMContentLoaded
 			//event) and when all required scripts are loaded.
@@ -29,4 +29,4 @@ require(["require_config"],function(cfg) {
 			
 		});
 	});
-});
+//});
