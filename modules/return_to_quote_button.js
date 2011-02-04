@@ -8,7 +8,7 @@
   * @requires commerce_ids
   * @requires jquery.cookie
   **/
-define(["jquery", "commerce_ids", "manager", "jquery.cookie"], function($, c_ids, mgr) {
+define(["jquery", "commerce_ids", "manager", "jquery_cookie"], function($, c_ids, mgr) {
 	mgr.register("return_to_quote_button");
   var return_to_quote_button = {};
 
