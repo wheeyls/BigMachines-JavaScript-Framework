@@ -6,15 +6,22 @@
 			$.noConflict();
 		</script>
 		<script src="js/allplugins-require.js" type="text/javascript" data-main="main-jq"></script>
-		<!--link rel="stylesheet" href="js/qunit.css"></link-->
+		<link rel="stylesheet" href="with_jq.css"></link>
 		<title>jQuery 1.4.2 AND Prototype</title>
 	</head>
 	<body>
-		<p>Some content.</p>
+		<div id='jq_div'></div>
 		<input type="hidden" id="mod_mgr_run_tests" value="true"/>
 		<div id="proto_div"></div>
 		<script type="text/javascript">
-			$("proto_div").replace("hi from prototype; version is: " + Prototype.Version);
+			(function reportProto() {
+				if(typeof jQuery !== "function") {
+					setTimeout(reportProto,100);
+				}
+				else {
+					$("proto_div").replace("<div id='proto_div'>hi from prototype; version is: " + Prototype.Version + "; jQuery version is: " + jQuery.fn.jquery + "</div>");
+				}
+			})();
 		</script>
 	</body>
 </html>

@@ -3,7 +3,7 @@ define([],function() {
 	
 	with_jquery.with_jquery = function(fn) {
 		if(typeof jQuery === "function") {
-			fn()
+			require([],fn);
 		} else {
 			require(["jquery-1.5"],function() {
 				$.noConflict();
