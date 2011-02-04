@@ -29,30 +29,25 @@ define(function() {
 	 * @param color (Optional) The color of the border
 	 */
 	test_util.border_test = function(elem,testName,color) {
-		if(typeof color == "undefined") {
+		if(typeof color === "undefined") {
 			color = test_util.generateRandomColor();
 		}
 		var testID = testName.replace(/ /g,"_");
-		var elemExists = elem != null && elem.length > 0;
 		test("<span style='border: 1px solid " + color + "' id='" + testID + "'>" + testName + "</span>",function() {
-			
-			if(elem != null) {
-				test_util.apply_border(elem,color);
-			}
-			ok(elemExists,elem.length + " elements found");
+			test_util.apply_border(elem,color);
+			var elemLength = jQuery(elem).length;
+			ok(elemLength > 0,elemLength + " elements found");
 		});
 		
 		// Clicking on the test results will take you to the element in question
-		if (elemExists) {
-			jQuery("li:has(#" + testID + ") ol","#qunit-tests")
-			.live("click", function(){
-				require(["jquery.scrollTo-1.4.2-min"], function(){
-					var offset = jQuery(elem).offset().top;
-					//console.info(testID + " clicked, top: " + offset);
-					jQuery.scrollTo(offset);
-				});
+		jQuery("li:has(#" + testID + ") ol","#qunit-tests")
+		.live("click", function(){
+			require(["jquery.scrollTo-1.4.2-min"], function(){
+				var offset = jQuery(elem).offset().top;
+				//console.info(testID + " clicked, top: " + offset);
+				jQuery.scrollTo(offset);
 			});
-		}
+		});
 	};
 	
 	return test_util;
