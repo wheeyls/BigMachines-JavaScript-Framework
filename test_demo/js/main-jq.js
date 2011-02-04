@@ -1,4 +1,4 @@
-require(["with-jquery"],function(with_jquery) {
+require(["with_jquery"],function(with_jquery) {
 	require.ready(function() {
 		with_jquery.set_jquery_version("jquery-1.4.4.min");
 	

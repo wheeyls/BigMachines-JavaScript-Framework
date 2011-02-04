@@ -9,14 +9,16 @@
 <span class='line'>  2</span>  * @param dependencies {Array} name of modules this code depends on. Can exclude ".js"
 <span class='line'>  3</span>  * @param callback {Function} function containing this module's functionality.
 <span class='line'>  4</span>  */</span><span class="WHIT">
-<span class='line'>  5</span> </span><span class="NAME">require</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="STRN">"return_to_quote_button"</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">rtq</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>  6</span> </span><span class="WHIT">  </span><span class="COMM">/*
-<span class='line'>  7</span>    * Put all functions for commerce here
-<span class='line'>  8</span>    */</span><span class="WHIT">
-<span class='line'>  9</span> 
-<span class='line'> 10</span> </span><span class="WHIT">  </span><span class="COMM">//this function runs when the page loads</span><span class="WHIT">
-<span class='line'> 11</span> </span><span class="WHIT">  </span><span class="NAME">require.ready</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 12</span> </span><span class="WHIT">	</span><span class="NAME">rtq.set_cookie_in_commerce</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 13</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 14</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 15</span> </span></pre></body></html>
+<span class='line'>  5</span> </span><span class="NAME">require</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="STRN">"require_config"</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">cfg</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="WHIT">	</span><span class="NAME">require</span><span class="PUNC">(</span><span class="NAME">cfg</span><span class="PUNC">,</span><span class="PUNC">[</span><span class="STRN">"mod/return_to_quote_button"</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">rtq</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>  7</span> </span><span class="WHIT">	  </span><span class="COMM">/*
+<span class='line'>  8</span> 	   * Put all functions for commerce here
+<span class='line'>  9</span> 	   */</span><span class="WHIT">
+<span class='line'> 10</span> 
+<span class='line'> 11</span> </span><span class="WHIT">	  </span><span class="COMM">//this function runs when the page loads</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="WHIT">	  </span><span class="NAME">require.ready</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 13</span> </span><span class="WHIT">		</span><span class="NAME">rtq.set_cookie_in_commerce</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="WHIT">	  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 15</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 16</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 17</span> </span></pre></body></html>

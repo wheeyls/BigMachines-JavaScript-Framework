@@ -12,24 +12,28 @@
 <span class='line'>  5</span>  * @version 1.0
 <span class='line'>  6</span>  */</span><span class="WHIT">
 <span class='line'>  7</span> 
-<span class='line'>  8</span> </span><span class="NAME">require</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="STRN">"logger"</span><span class="PUNC">,</span><span class="STRN">"test_mod"</span><span class="PUNC">,</span><span class="STRN">"test_mod2"</span><span class="PUNC">,</span><span class="STRN">"commerce_ids"</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">logger</span><span class="PUNC">,</span><span class="NAME">test_mod</span><span class="PUNC">,</span><span class="NAME">tm2</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>  9</span> </span><span class="WHIT">	</span><span class="NAME">require.ready</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 10</span> </span><span class="WHIT">		</span><span class="COMM">//This function is called when the page is loaded (the DOMContentLoaded</span><span class="WHIT">
-<span class='line'> 11</span> </span><span class="WHIT">		</span><span class="COMM">//event) and when all required scripts are loaded.</span><span class="WHIT">
-<span class='line'> 12</span> 
-<span class='line'> 13</span> </span><span class="WHIT">		</span><span class="COMM">//Do nested require() calls in here if you want to load code</span><span class="WHIT">
-<span class='line'> 14</span> </span><span class="WHIT">		</span><span class="COMM">//after page load.</span><span class="WHIT">
-<span class='line'> 15</span> </span><span class="WHIT">		</span><span class="WHIT">
-<span class='line'> 16</span> </span><span class="WHIT">		</span><span class="COMM">//logger.setLogLevel("warn");</span><span class="WHIT">
-<span class='line'> 17</span> </span><span class="WHIT">		</span><span class="WHIT">
-<span class='line'> 18</span> </span><span class="WHIT">		</span><span class="COMM">//require(["test_mod"],function(test_mod) {</span><span class="WHIT">
-<span class='line'> 19</span> </span><span class="WHIT">			</span><span class="COMM">// do some stuff with it</span><span class="WHIT">
-<span class='line'> 20</span> </span><span class="WHIT">			</span><span class="NAME">logger.info</span><span class="PUNC">(</span><span class="STRN">"test_func returns: "</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">test_mod.test_func</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 21</span> </span><span class="WHIT">		</span><span class="COMM">//});</span><span class="WHIT">
-<span class='line'> 22</span> </span><span class="WHIT">		</span><span class="WHIT">
-<span class='line'> 23</span> </span><span class="WHIT">		</span><span class="COMM">//require(["test_mod2"],function(tm2) {</span><span class="WHIT">
-<span class='line'> 24</span> </span><span class="WHIT">			</span><span class="NAME">logger.info</span><span class="PUNC">(</span><span class="STRN">"test_mod2 test_func returns: "</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">tm2.test_func</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 25</span> </span><span class="WHIT">		</span><span class="COMM">//});</span><span class="WHIT">
-<span class='line'> 26</span> </span><span class="WHIT">		</span><span class="WHIT">
-<span class='line'> 27</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 28</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
+<span class='line'>  8</span> </span><span class="NAME">require</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="STRN">"require_config"</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">cfg</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>  9</span> </span><span class="WHIT">	</span><span class="NAME">require</span><span class="PUNC">(</span><span class="NAME">cfg</span><span class="PUNC">,</span><span class="PUNC">[</span><span class="STRN">"logger"</span><span class="PUNC">,</span><span class="STRN">"mod/test_mod"</span><span class="PUNC">,</span><span class="STRN">"mod/test_mod2"</span><span class="PUNC">,</span><span class="STRN">"mod/return_to_quote_button"</span><span class="PUNC">,</span><span class="STRN">"jquery.cookie"</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">logger</span><span class="PUNC">,</span><span class="NAME">test_mod</span><span class="PUNC">,</span><span class="NAME">tm2</span><span class="PUNC">,</span><span class="NAME">rtq</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 10</span> </span><span class="WHIT">		</span><span class="NAME">require.ready</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 11</span> </span><span class="WHIT">			</span><span class="COMM">//This function is called when the page is loaded (the DOMContentLoaded</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="WHIT">			</span><span class="COMM">//event) and when all required scripts are loaded.</span><span class="WHIT">
+<span class='line'> 13</span> 
+<span class='line'> 14</span> </span><span class="WHIT">			</span><span class="COMM">//Do nested require() calls in here if you want to load code</span><span class="WHIT">
+<span class='line'> 15</span> </span><span class="WHIT">			</span><span class="COMM">//after page load.</span><span class="WHIT">
+<span class='line'> 16</span> </span><span class="WHIT">			</span><span class="WHIT">
+<span class='line'> 17</span> </span><span class="WHIT">			</span><span class="COMM">//logger.setLogLevel("warn");</span><span class="WHIT">
+<span class='line'> 18</span> </span><span class="WHIT">			</span><span class="WHIT">
+<span class='line'> 19</span> </span><span class="WHIT">			</span><span class="NAME">jQuery.cookie</span><span class="PUNC">(</span><span class="STRN">"last_transaction"</span><span class="PUNC">,</span><span class="STRN">"blah"</span><span class="PUNC">,</span><span class="PUNC">{</span><span class="WHIT"> </span><span class="NAME">path</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"/"</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 20</span> </span><span class="WHIT">			</span><span class="WHIT">
+<span class='line'> 21</span> </span><span class="WHIT">			</span><span class="COMM">//require(["test_mod"],function(test_mod) {</span><span class="WHIT">
+<span class='line'> 22</span> </span><span class="WHIT">				</span><span class="COMM">// do some stuff with it</span><span class="WHIT">
+<span class='line'> 23</span> </span><span class="WHIT">				</span><span class="NAME">logger.info</span><span class="PUNC">(</span><span class="STRN">"test_func returns: "</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">test_mod.test_func</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 24</span> </span><span class="WHIT">			</span><span class="COMM">//});</span><span class="WHIT">
+<span class='line'> 25</span> </span><span class="WHIT">			</span><span class="WHIT">
+<span class='line'> 26</span> </span><span class="WHIT">			</span><span class="COMM">//require(["test_mod2"],function(tm2) {</span><span class="WHIT">
+<span class='line'> 27</span> </span><span class="WHIT">				</span><span class="NAME">logger.info</span><span class="PUNC">(</span><span class="STRN">"test_mod2 test_func returns: "</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">tm2.test_func</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 28</span> </span><span class="WHIT">			</span><span class="COMM">//});</span><span class="WHIT">
+<span class='line'> 29</span> </span><span class="WHIT">			</span><span class="WHIT">
+<span class='line'> 30</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 31</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 32</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
