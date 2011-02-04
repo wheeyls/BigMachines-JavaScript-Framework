@@ -1,4 +1,4 @@
-define(["jquery","return_to_quote_button", "commerce_ids", "jquery.cookie"],function($,rtq,ids) {
+define(["jquery","return_to_quote_button", "commerce_ids", "jquery_cookie"],function($,rtq,ids) {
 	var tests = {};
 	
 	tests.run_tests = function() {
