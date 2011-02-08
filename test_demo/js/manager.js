@@ -19,10 +19,14 @@ define(["text!qunit.css","logger","require_config","qunit","jquery.cookie"],func
 	* @param module_name {String}: name of module to register
 	* @param test_module_name {String}: Optional. Name of test suite module. If not specified, defaults to {module_name}_tests
 	*/
-	manager.register = function(module) {
-		logger.debug("registering: " + module.toSource());
-		var module_name = module.name;
-		var test_module_name = module.test_name;
+	manager.register = function(properties) {
+		
+		if(typeof properties === "string") {
+			properties = { name: properties };
+		}
+		logger.debug("registering: " + properties.toSource());
+		var module_name = properties.name;
+		var test_module_name = properties.test_name;
 		modules.push(module_name);
 
 		if(test_enabled()) {

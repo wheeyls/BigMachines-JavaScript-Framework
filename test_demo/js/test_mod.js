@@ -3,8 +3,10 @@
 * @name test_mod
 * @requires manager
 */
-define(["BMModule","logger"],function(mod,logger) {
-	var test_mod = mod.extend("test_mod");
+define(["manager","logger"],function(mod,logger) {
+	mod.register({ name: "test_mod", version: "0.5" });
+	
+	var test_mod = {};
 	
 	/**
 	* Test func returns a true value
