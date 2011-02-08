@@ -3,10 +3,8 @@
 * @name test_mod
 * @requires manager
 */
-define(["manager"],function(mgr) {
-	mgr.register("test_mod");
-	
-	var test_mod = {};
+define(["BMModule","logger"],function(mod,logger) {
+	var test_mod = mod.extend("test_mod");
 	
 	/**
 	* Test func returns a true value
@@ -16,8 +14,6 @@ define(["manager"],function(mgr) {
 	test_mod.test_func = function() {
 		return true;
 	}
-
-	//require(["test_mod_tests"]);
 	
 	return test_mod;
 });
