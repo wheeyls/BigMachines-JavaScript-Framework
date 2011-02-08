@@ -1,5 +1,5 @@
 /**
- * Version of homepage for 11.0, non-quickstart 11.0 sites
+ * Version of homepage for QuickStart 11.0 sites
  * @param dependencies {Array} name of modules this code depends on. Can exclude ".js"
  * @param callback {Function} function containing this module's functionality.
  */
