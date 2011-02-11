@@ -1,8 +1,10 @@
 /** 
 * @namespace Manages common BigMachines modules
 * @name manager
-* @requires jquery
 * @requires qunit
+* @requires logger
+* @requires jquery.cookie
+* @requires require_config
 * @constructor
 */
 define(["text!qunit.css","logger","require_config","qunit","jquery.cookie"],function(css,logger,cfg) {
@@ -16,8 +18,10 @@ define(["text!qunit.css","logger","require_config","qunit","jquery.cookie"],func
 	/**
 	* Add module to the list of modules managed by this manager and run tests if necessary.
 	* @memberOf manager
-	* @param module_name {String}: name of module to register
-	* @param test_module_name {String}: Optional. Name of test suite module. If not specified, defaults to {module_name}_tests
+	* 
+	* @param properties {Object/String} If String, name of module to register; otherwise specify the following properties:
+	* @param properties.name {String} Name of the module
+	* @param properties.test_name {String} Name of the test module (default "{module_name}_tests")
 	*/
 	manager.register = function(properties) {
 		

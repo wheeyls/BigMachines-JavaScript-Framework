@@ -57,7 +57,7 @@ define(["manager","logger"], function(mgr,logger) {
 		* @requires commerce_ids
 		*/
 		return_to_quote_button.set_cookie_in_commerce = function() {
-			require(["mod/commerce_ids"],function(c_ids) {
+			require(["commerce_ids"],function(c_ids) {
 				//get ids off page
 				var ids = c_ids.get_ids();
 				//builds url
