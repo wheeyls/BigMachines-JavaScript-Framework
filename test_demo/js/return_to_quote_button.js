@@ -10,7 +10,7 @@ define(["manager","logger"], function(mgr,logger) {
 	mgr.register("return_to_quote_button");
 	var return_to_quote_button = {};
 	
-	require(["jquery.cookie"],function() {
+	require(["jquery_cookie"],function() {
 		/**
 		* Called from homepage. Shows a return to quote button on the page, contingent
 		* on a cookie created by set_cookie_in_commerce.

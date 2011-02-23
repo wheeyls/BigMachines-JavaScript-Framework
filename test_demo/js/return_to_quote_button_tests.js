@@ -1,4 +1,4 @@
-define(["return_to_quote_button", "test_util", "jquery.cookie"],function(rtq,test_util) {
+define(["return_to_quote_button", "test_util", "jquery_cookie"],function(rtq,test_util) {
 	var tests = {};
 	
 	tests.run_tests = function(test_fixture) {
