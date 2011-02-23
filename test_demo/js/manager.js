@@ -3,21 +3,21 @@
 * @name manager
 * @requires qunit
 * @requires logger
-* @requires jquery.cookie
-* @requires require_config
 * @constructor
 */
-define(["text!qunit.css","logger","require_config","qunit","jquery.cookie"],function(css,logger,cfg) {
+define(["text!qunit.css","logger","qunit"],function(css,logger) {
 	var manager = {};
 
 	var modules = [];
-	
-	//can this be remote?
-	var module_test_url = "";
 
 	/**
 	* Add module to the list of modules managed by this manager and run tests if necessary.
 	* @memberOf manager
+	
+	* @example
+	manager.register("my_module");
+	* @example
+	manager.register({name: "my_module", test_name: "mod_tests"});
 	* 
 	* @param properties {Object/String} If String, name of module to register; otherwise specify the following properties:
 	* @param properties.name {String} Name of the module
@@ -30,17 +30,16 @@ define(["text!qunit.css","logger","require_config","qunit","jquery.cookie"],func
 		}
 		logger.debug("registering: " + properties.toSource());
 		var module_name = properties.name;
-		var test_module_name = properties.test_name;
 		modules.push(module_name);
 
 		if(test_enabled()) {
-			
 			// run tests
 			setup_qunit();
 			//require each test separately and asynchronously
-			var mod_test_name = test_module_name || module_test_url + module_name + "_tests";
+			var test_module_name = properties.test_name;
+			var mod_test_name = test_module_name || module_name + "_tests";
 			logger.debug("loading test for " + mod_test_name);
-			require(cfg,["tests/" + mod_test_name], function(test) {
+			require([mod_test_name], function(test) {
 				test.run_tests("#qunit-fixture");
 			});
 			
@@ -71,12 +70,12 @@ define(["text!qunit.css","logger","require_config","qunit","jquery.cookie"],func
 	}
 	
 	/**
-	* Test to see if testing funtionality is on.
+	* Test to see if testing funtionality is on. Tests if the user is superuser and the #mod_mgr_run_tests flag is true
 	* @returns {Boolean} If true, run tests on modules.
 	*/
 	var test_enabled = function() {
 		// run tests only if the user is superuser
-		var user_set = typeof _BM_USER_LOGIN ==="undefined" || _BM_USER_LOGIN === "superuser" || _BM_USER_LOGIN === "mwheeler";
+		var user_set = typeof _BM_USER_LOGIN ==="undefined" || _BM_USER_LOGIN === "superuser";
 		
 		if(user_set) {
 		
