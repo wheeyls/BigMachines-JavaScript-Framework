@@ -9,6 +9,6 @@ require(["return_to_quote_button"],function(rtq) {
 	*/
 	//this function runs when the page loads
 	require.ready(function() {
-		rtq.add_button_to_homepage();
+		rtq.add_button_to_homepage(rtq.v10_homepage_callback);
 	});
 });
