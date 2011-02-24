@@ -3,7 +3,8 @@
 * @namespace
 * @name with_jquery
 */
-define([],function() {
+define(["manager"],function(mgr) {
+	mgr.register("with_jquery");
 	var with_jquery = {};
 	
 	var jquery_script = "jquery-1.5";
@@ -28,16 +29,18 @@ define([],function() {
 	* });
 	* @param function {Function} Should be a function with no arguments. When referring to jQuery, you must use "jQuery"
 	*/
-	with_jquery.with_jquery = function(fn) {
-		if(typeof jQuery === "function") {
-			require([],fn);
-		} else {
-			require([jquery_script],function() {
-				$.noConflict();
-				fn();
-			});
+	return function() {
+		var args = arguments;
+		if(typeof jQuery !== "function") { 
+			require([jquery_script], function() { 
+				jQuery.noConflict();
+				require.apply(window, args); 
+			}); 
+		} 
+		else { 
+			require.apply(window, arguments); 
 		}
 	}
 
-	return with_jquery;
+	//return with_jquery;
 });

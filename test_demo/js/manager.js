@@ -51,7 +51,7 @@ define(["text!qunit.css","logger","qunit"],function(css,logger) {
 	*/
 	var setup_qunit = function() {
 		// only one container on the page, crawl the DOM once
-		if (jQuery("#qunit_container").length === 0) {
+		if (typeof jQuery === "function" && jQuery("#qunit_container").length === 0) {
 			var qunitContainer = document.createElement("div");
 			qunitContainer.id = "qunit_container";
 			jQuery(qunitContainer).append(
@@ -80,7 +80,7 @@ define(["text!qunit.css","logger","qunit"],function(css,logger) {
 		if(user_set) {
 		
 			// flag set in header/footer: 
-			var flag_set = jQuery("#mod_mgr_run_tests").attr("value") === "true";
+			var flag_set = document.getElementById("mod_mgr_run_tests").value === "true";
 			if(flag_set) {
 				return true;
 			}
