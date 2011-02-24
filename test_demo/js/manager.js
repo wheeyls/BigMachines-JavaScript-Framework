@@ -5,7 +5,7 @@
 * @requires logger
 * @constructor
 */
-define(["text!qunit.css","logger","qunit"],function(css,logger) {
+define(["logger","qunit"],function(logger) {
 	var manager = {};
 
 	var modules = [];
@@ -64,7 +64,9 @@ define(["text!qunit.css","logger","qunit"],function(css,logger) {
 			jQuery("body").append(qunitContainer);
 			
 			// css
-			jQuery("head").append("<style>" + css + "</style>");
+			require(["text!qunit.css"],function(css) {
+				jQuery("head").append("<style>" + css + "</style>");
+			});
 		}
 		return;
 	}
