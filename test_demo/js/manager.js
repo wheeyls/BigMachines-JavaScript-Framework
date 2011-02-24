@@ -28,7 +28,7 @@ define(["text!qunit.css","logger","qunit"],function(css,logger) {
 		if(typeof properties === "string") {
 			properties = { name: properties };
 		}
-		logger.debug("registering: " + properties.toSource());
+		logger.debug("registering: " + properties.name);
 		var module_name = properties.name;
 		modules.push(module_name);
 
