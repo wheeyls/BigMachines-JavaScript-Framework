@@ -4,7 +4,7 @@
  */
 require([], function() {
   /*
-   * Put all functions for config here
+   * Put all functions for sitewide context here
    */
 
   //this function runs when the page loads
