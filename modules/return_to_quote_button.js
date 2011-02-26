@@ -4,13 +4,15 @@
   * @name return_to_quote_button
   * @description A module to add a "Return To Quote" button on the homepage, based on a recent quote.
   *
-  * @requires jquery
   * @requires commerce_ids
   * @requires jquery.cookie
   **/
-define(["jquery", "commerce_ids", "manager", "jquery_cookie"], function($, c_ids, mgr) {
+define(["commerce_ids", "manager", "jquery_cookie"], function(c_ids, mgr) {
 	mgr.register("return_to_quote_button");
   var return_to_quote_button = {};
+
+	// alias jQuery in this scope
+	var $ = jQuery;
 
   /**
    * Called from homepage. Shows a return to quote button on the page, contingent

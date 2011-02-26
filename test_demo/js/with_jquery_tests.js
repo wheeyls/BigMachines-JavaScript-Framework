@@ -5,7 +5,7 @@ define(["with_jquery","qunit"],function(wjq) {
 	var tests = {};
 	
 	// because we are testing multiple global scripts we need a little delay
-	var delay = 500;
+	var delay = 0;
 	
 	tests.run_tests = function(fixture) {
 		module("with_jquery");
@@ -38,9 +38,9 @@ define(["with_jquery","qunit"],function(wjq) {
 		function testproto() {
 			require(["prototype"],function() {
 				test("Prototype ($) should not be affected",function() {
-					var protoVersion = $.Version;
+					var protoVersion = Prototype.Version;
 					wjq([],function() {
-						ok($.Version === protoVersion,"$ version: " + $.Version);
+						ok(Prototype.Version === protoVersion,"$ version: " + Prototype.Version);
 					});	
 				});
 			});
