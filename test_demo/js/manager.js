@@ -5,7 +5,8 @@
 * @requires logger
 * @constructor
 */
-define(["logger","qunit"],function(logger) {
+
+define(["logger"],function(logger) {
 	var manager = {};
 
 	var modules = [];
@@ -39,7 +40,8 @@ define(["logger","qunit"],function(logger) {
 			var test_module_name = properties.test_name;
 			var mod_test_name = test_module_name || module_name + "_tests";
 			logger.debug("loading test for " + mod_test_name);
-			require([mod_test_name], function(test) {
+			
+			require([mod_test_name,"qunit"], function(test) {
 				test.run_tests("#qunit-fixture");
 			});
 			
@@ -82,10 +84,8 @@ define(["logger","qunit"],function(logger) {
 		if(user_set) {
 		
 			// flag set in header/footer: 
-			var flag_set = document.getElementById("mod_mgr_run_tests").value === "true";
-			if(flag_set) {
-				return true;
-			}
+			var flag = document.getElementById("mod_mgr_run_tests");
+			return flag && flag.value === "true";
 		}
 		
 		return false;
