@@ -4,7 +4,7 @@
 * @requires qunit
 * @requires logger
 * @constructor
-* @version Fri Feb 25 18:26:52 2011
+* @version Fri Feb 25 18:35:08 2011
 */
 
 define(["logger"],function(logger) {

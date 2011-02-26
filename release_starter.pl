@@ -1,5 +1,4 @@
 use strict;
-use File::Copy;
 use IO::Compress::Zip qw(zip $ZipError);
 use Time::localtime;
 
@@ -21,7 +20,6 @@ print "$datestr\n";
 
 foreach my $file (@list) {
 	print "Copying: $file.js\n";
-	copy("$src/$file.js","$dest");
 	open(IN,"<$src/$file.js") or die $!;
 	open(OUT,">$dest/$file.js") or die $!;
 	while(<IN>) {

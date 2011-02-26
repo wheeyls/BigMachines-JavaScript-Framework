@@ -1,7 +1,7 @@
 /**
 * @namespace A utility for logging messages to the console
 * @name logger
-* @version Fri Feb 25 18:26:52 2011
+* @version Fri Feb 25 18:35:08 2011
 */
 define([],function() {
 	
