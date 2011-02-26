@@ -82,10 +82,10 @@ define(["logger","qunit"],function(logger) {
 		if(user_set) {
 		
 			// flag set in header/footer: 
-			var flag_set = document.getElementById("mod_mgr_run_tests").value === "true";
-			if(flag_set) {
-				return true;
-			}
+			
+			// flag set in header/footer: 
+			var flag = document.getElementById("mod_mgr_run_tests");
+			return flag && flag.value === "true";
 		}
 		
 		return false;
