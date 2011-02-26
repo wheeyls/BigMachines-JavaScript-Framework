@@ -34,7 +34,7 @@ define(["manager"],function(mgr) {
 		if(typeof jQuery !== "function") { 
 			require([jquery_script], function() { 
 				jQuery.noConflict();
-				require.apply(window, args); 
+				require.apply(this, args); 
 			}); 
 		} 
 		else { 
