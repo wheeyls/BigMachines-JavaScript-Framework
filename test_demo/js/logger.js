@@ -24,9 +24,14 @@ define([],function() {
 	* @param str {String}: The string to write
 	*/
 	logger.debug = function(str) {
-		if(typeof console !== 'object' || !('debug' in console)) {return;}
+		if(typeof console !== 'object') {return;}
 		if(loglevel >= loglevels.debug) {
-			console.debug(str);
+			if('debug' in console) {
+				console.debug(str);
+			} else if('log' in console) {
+				// IE uses log instead of debug
+				console.log(str);
+			}
 		}
 	}
 	
