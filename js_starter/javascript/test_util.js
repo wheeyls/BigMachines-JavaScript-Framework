@@ -1,7 +1,7 @@
 /**
 * @namespace test_util - helpful features for creating tests
 * @name test_util
-* @version 02/25/2011
+* @version Fri Feb 25 18:26:52 2011
 */
 define(function() {
 	var test_util = {};
