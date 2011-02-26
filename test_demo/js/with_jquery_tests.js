@@ -1,3 +1,6 @@
+/**
+* @version 02/25/2011
+*/
 define(["with_jquery","qunit"],function(wjq) {
 	var tests = {};
 	

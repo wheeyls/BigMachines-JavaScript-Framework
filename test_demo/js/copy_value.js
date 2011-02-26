@@ -1,3 +1,6 @@
+/**
+* @version 02/25/2011
+*/
 define(["manager","logger"],function(mgr,logger) {
 	mgr.register("copy_value");
 	var copy_value = {};

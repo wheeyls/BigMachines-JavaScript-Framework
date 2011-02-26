@@ -2,6 +2,7 @@
 * This module abstracts loading of jQuery, taking care of conflicts
 * @namespace
 * @name with_jquery
+* @version 02/25/2011
 */
 define(["manager"],function(mgr) {
 	mgr.register("with_jquery");
