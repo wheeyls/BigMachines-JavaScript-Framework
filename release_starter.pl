@@ -3,6 +3,13 @@ use File::Copy;
 use IO::Compress::Zip qw(zip $ZipError);
 use Time::localtime;
 
+if(scalar @ARGV ne 2) {
+	print "Usage: perl $0 {source} {dest}\n";
+	print 'Copy Javascript files from {source} to {dest}.' . "\n";
+	print 'Also creates a zip archive and sets @version to current time';
+	exit 0;
+}
+
 my $src = @ARGV[0];
 my $dest = @ARGV[1];
 
