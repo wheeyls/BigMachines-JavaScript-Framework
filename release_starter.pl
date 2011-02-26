@@ -12,7 +12,7 @@ if(scalar @ARGV ne 2) {
 my $src = @ARGV[0];
 my $dest = @ARGV[1];
 
-my @list = qw(allplugins-require commerce commerce_line config homepage logger manager test_util);
+my @list = qw(allplugins-require commerce commerce_line config homepage logger manager sitewide test_util);
 
 my @date = localtime(time);
 my $datestr = ctime();
