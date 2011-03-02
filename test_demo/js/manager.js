@@ -1,3 +1,5 @@
+/*global define, _BM_USER_LOGIN, document, jQuery, require */
+
 /** 
 * @namespace Manages common BigMachines modules
 * @name manager
@@ -6,53 +8,33 @@
 * @constructor
 * @version 02/25/2011
 */
-
-define(["logger"],function(logger) {
-	var manager = {};
-
-	var modules = [];
+define(["logger"], function (logger) {
+	var manager = {}, modules = [], test_enabled, setup_qunit;
 
 	/**
-	* Add module to the list of modules managed by this manager and run tests if necessary.
-	* @memberOf manager
-	
-	* @example
-	manager.register("my_module");
-	* @example
-	manager.register({name: "my_module", test_name: "mod_tests"});
-	* 
-	* @param properties {Object/String} If String, name of module to register; otherwise specify the following properties:
-	* @param properties.name {String} Name of the module
-	* @param properties.test_name {String} Name of the test module (default "{module_name}_tests")
+	* Test to see if testing funtionality is on. Tests if the user is superuser and the #mod_mgr_run_tests flag is true
+	* @returns {Boolean} If true, run tests on modules.
 	*/
-	manager.register = function(properties) {
+	test_enabled = function () {
+		// run tests only if the user is superuser
+		var flag, user_set;
 		
-		if(typeof properties === "string") {
-			properties = { name: properties };
+		user_set = typeof _BM_USER_LOGIN === "undefined" || _BM_USER_LOGIN === "superuser";
+		
+		if(user_set) {
+		
+			// flag set in header/footer: 
+			flag = document.getElementById("mod_mgr_run_tests");
+			return flag && flag.value === "true";
 		}
-		logger.debug("registering: " + properties.name);
-		var module_name = properties.name;
-		modules.push(module_name);
-
-		if(test_enabled()) {
-			// run tests
-			setup_qunit();
-			//require each test separately and asynchronously
-			var test_module_name = properties.test_name;
-			var mod_test_name = test_module_name || module_name + "_tests";
-			logger.debug("loading test for " + mod_test_name);
-			
-			require([mod_test_name,"qunit"], function(test) {
-				test.run_tests("#qunit-fixture");
-			});
-			
-		}
+		
+		return false;
 	};
 	
 	/** 
 	* Adds the qunit test results/CSS to the page
 	*/
-	var setup_qunit = function() {
+	setup_qunit = function() {
 		// only one container on the page, crawl the DOM once
 		if (typeof jQuery === "function" && jQuery("#qunit_container").length === 0) {
 			var qunitContainer = document.createElement("div");
@@ -72,24 +54,44 @@ define(["logger"],function(logger) {
 			});
 		}
 		return;
-	}
+	};
 	
 	/**
-	* Test to see if testing funtionality is on. Tests if the user is superuser and the #mod_mgr_run_tests flag is true
-	* @returns {Boolean} If true, run tests on modules.
+	* Add module to the list of modules managed by this manager and run tests if necessary.
+	* @memberOf manager
+	
+	* @example
+	manager.register("my_module");
+	* @example
+	manager.register({name: "my_module", test_name: "mod_tests"});
+	* 
+	* @param properties {Object/String} If String, name of module to register; otherwise specify the following properties:
+	* @param properties.name {String} Name of the module
+	* @param properties.test_name {String} Name of the test module (default "{module_name}_tests")
 	*/
-	var test_enabled = function() {
-		// run tests only if the user is superuser
-		var user_set = typeof _BM_USER_LOGIN ==="undefined" || _BM_USER_LOGIN === "superuser";
+	manager.register = function(properties) {
+		var module_name, test_module_name, mod_test_name;
 		
-		if(user_set) {
-		
-			// flag set in header/footer: 
-			var flag = document.getElementById("mod_mgr_run_tests");
-			return flag && flag.value === "true";
+		if(typeof properties === "string") {
+			properties = { name: properties };
 		}
-		
-		return false;
+		logger.debug("registering: " + properties.name);
+		module_name = properties.name;
+		modules.push(module_name);
+
+		if(test_enabled()) {
+			// run tests
+			setup_qunit();
+			//require each test separately and asynchronously
+			test_module_name = properties.test_name;
+			mod_test_name = test_module_name || module_name + "_tests";
+			logger.debug("loading test for " + mod_test_name);
+			
+			require([mod_test_name,"qunit"], function(test) {
+				test.run_tests("#qunit-fixture");
+			});
+			
+		}
 	};
 	
 	return manager;
