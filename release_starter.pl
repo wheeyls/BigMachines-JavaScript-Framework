@@ -15,10 +15,12 @@ my $dest = @ARGV[1] || "js_starter/javascript";
 
 my @list = qw(allplugins-require logger manager test_util);
 my @from_template = qw(commerce commerce_line config homepage sitewide);
+my @css_files = qw(qunit);
 my @all_files = @list;
 
 # read in template
 push(@all_files,@from_template);
+push(@all_files,@css_files);
 my $template_file = "$src/blank_template.js";
 print "$template_file\n";
 open(TEMPLATE,"<$template_file") or die "No template: $!";
@@ -33,23 +35,27 @@ my $datestr = ctime();
 print "$datestr\n";
 
 foreach my $file (@all_files) {
-	open(OUT,">$dest/$file.js") or die $!;
+	my $ext = "js";
+	if(grep /$file/,@css_files) {
+		$ext = "css";
+	}
+	open(OUT,">$dest/$file.$ext") or die $!;
 	if(grep /$file/,@from_template) {
 		foreach my $temp_line (@template_lines) {
 			$temp_line =~ s/(\@version).*/$1 $datestr/;
 			print OUT $temp_line;
 		}
 	} else {
-		open(IN,"<$src/$file.js") or die $!;
+		open(IN,"<$src/$file.$ext") or die $!;
 		while(<IN>) {
 			s/(\@version).*/$1 $datestr/;
 			print OUT $_;
 		}
 	}
+	print "Copying: $file.$ext\n";
 	close(OUT);
-	print "Copying: $file.js\n";
 }
 
 chdir($dest);
-zip "<*.js>" => "../PS.BIF.JA.09 - Javascript.zip"
+zip "<*.{js,css}>" => "../PS.BIF.JA.09 - Javascript.zip"
         or die "zip failed: $ZipError\n";
