@@ -51,5 +51,5 @@ foreach my $file (@all_files) {
 }
 
 chdir($dest);
-zip "<*.js>" => "../javascript.zip"
+zip "<*.js>" => "../PS.BIF.JA.09 - Javascript.zip"
         or die "zip failed: $ZipError\n";
