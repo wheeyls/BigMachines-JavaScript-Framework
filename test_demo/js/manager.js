@@ -3,7 +3,6 @@
 /** 
 * @namespace Manages common BigMachines modules
 * @name manager
-* @requires qunit
 * @requires logger
 * @constructor
 * @version 02/25/2011
