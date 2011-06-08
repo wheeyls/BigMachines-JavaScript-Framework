@@ -6,7 +6,7 @@
  */
 
 //require(["require_config"],function(cfg) {
-	require(/*cfg,*/["logger","test_mod","test_mod2","return_to_quote_button","jquery.cookie"],function(logger,test_mod,tm2,rtq) {
+	require(/*cfg,*/["logger","test_mod","test_mod2","return_to_quote_button","jquery-1.5.js","jquery_cookie"],function(logger,test_mod,tm2,rtq) {
 		require.ready(function() {
 			//This function is called when the page is loaded (the DOMContentLoaded
 			//event) and when all required scripts are loaded.
