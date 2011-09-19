@@ -1,0 +1,18 @@
+body {
+	
+}
+.mod {
+
+}
+
+.waiting {
+	color: blue;
+}
+.ready {
+	color: green;
+}
+.notready {
+	color: red;
+}
+.controls {
+}

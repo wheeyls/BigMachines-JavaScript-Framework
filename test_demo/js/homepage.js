@@ -3,7 +3,7 @@
  * @param callback {Function} function containing this module's functionality.
  * @version 02/25/2011
  */
-require([],function(rtq) {
+require([],function() {
 	/*
 	* Put all functions for homepage here
 	*/
