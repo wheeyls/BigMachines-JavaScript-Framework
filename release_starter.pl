@@ -13,9 +13,9 @@ if($opt_h) {
 my $src = @ARGV[0] || "test_demo/js";
 my $dest = @ARGV[1] || "js_starter/javascript";
 
-my @list = qw(allplugins-require logger manager test_util);
+my @list = qw(bm-framework bm-framework-support);
 my @from_template = qw(commerce commerce_line config homepage sitewide);
-my @css_files = qw(qunit);
+my @css_files = qw();
 my @all_files = @list;
 
 # read in template

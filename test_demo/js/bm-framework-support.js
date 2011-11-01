@@ -6,6 +6,7 @@
  * Contents of this file: requirejs 0.26
  * BigMachines Framework Bootstrap tool
  * ======================================
+ * @version
  **/
 
 /*
