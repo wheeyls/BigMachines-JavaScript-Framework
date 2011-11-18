@@ -12,15 +12,15 @@ if($opt_h) {
 
 my $src = @ARGV[0] || "test_demo/js";
 my $dest = @ARGV[1] || "js_starter/javascript";
+my $upgrade_dest = @ARGV[2] || "js_upgrade/javascript";
 
-my @list = qw(bm-framework.js upgrade.html text.js return_to_quote_button.js commerce_ids.js jquery_cookie.js);
+my @list = qw(bm-framework.js text.js return_to_quote_button.js commerce_ids.js jquery_cookie.js);
 my @from_template = qw(commerce.js commerce_line.js config.js homepage.js sitewide.js);
-my @css_files = qw();
+my @upgrade_files = qw(bm-framework.js upgrade.html text.js return_to_quote_button.js);
 my @all_files = @list;
 
 # read in template
 push(@all_files,@from_template);
-push(@all_files,@css_files);
 my $template_file = "$src/blank_template.js";
 print "$template_file\n";
 open(TEMPLATE,"<$template_file") or die "No template: $!";
@@ -35,10 +35,6 @@ my $datestr = ctime();
 print "$datestr\n";
 
 foreach my $file (@all_files) {
-	my $ext = "js";
-	if(grep /$file/,@css_files) {
-		$ext = "css";
-	}
 	open(OUT,">$dest/$file") or die $!;
 	if(grep /$file/,@from_template) {
 		foreach my $temp_line (@template_lines) {
@@ -56,6 +52,23 @@ foreach my $file (@all_files) {
 	close(OUT);
 }
 
+foreach my $file (@upgrade_files) {
+	open(OUT,">$upgrade_dest/$file") or die $!;
+
+	open(IN,"<$src/$file") or die $!;
+	while(<IN>) {
+		s/(\@version).*/$1 $datestr/;
+		print OUT $_;
+	}
+
+	print "Copying: $file\n";
+	close(OUT);
+}
+
 chdir($dest);
-zip "<*.{js,css}>" => "../GS.COE.JA.09 - Javascript.zip"
+zip "<*.{js,css,html}>" => "../javascript.zip"
+        or die "zip failed: $ZipError\n";
+chdir("../..");
+chdir($upgrade_dest);
+zip "<*.{js,css,html}>" => "../javascript.zip"
         or die "zip failed: $ZipError\n";
