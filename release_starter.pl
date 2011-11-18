@@ -13,8 +13,8 @@ if($opt_h) {
 my $src = @ARGV[0] || "test_demo/js";
 my $dest = @ARGV[1] || "js_starter/javascript";
 
-my @list = qw(bm-framework bm-framework-support);
-my @from_template = qw(commerce commerce_line config homepage sitewide);
+my @list = qw(bm-framework.js upgrade.html text.js return_to_quote_button.js commerce_ids.js jquery_cookie.js);
+my @from_template = qw(commerce.js commerce_line.js config.js homepage.js sitewide.js);
 my @css_files = qw();
 my @all_files = @list;
 
@@ -39,20 +39,20 @@ foreach my $file (@all_files) {
 	if(grep /$file/,@css_files) {
 		$ext = "css";
 	}
-	open(OUT,">$dest/$file.$ext") or die $!;
+	open(OUT,">$dest/$file") or die $!;
 	if(grep /$file/,@from_template) {
 		foreach my $temp_line (@template_lines) {
 			$temp_line =~ s/(\@version).*/$1 $datestr/;
 			print OUT $temp_line;
 		}
 	} else {
-		open(IN,"<$src/$file.$ext") or die $!;
+		open(IN,"<$src/$file") or die $!;
 		while(<IN>) {
 			s/(\@version).*/$1 $datestr/;
 			print OUT $_;
 		}
 	}
-	print "Copying: $file.$ext\n";
+	print "Copying: $file\n";
 	close(OUT);
 }
 

@@ -1,5 +1,5 @@
 /**
- * The BigMachines JavaScript Framework
+ * The BigMachines JavaScript Framework v2
  * @version Mon Sep 19 15:39:20 2011
  **/
 var requirejs, require, define;
@@ -11,33 +11,22 @@ var requirejs, require, define;
 		 * Then write your code in the corresponding file in the File Manager
 		 *
 		 * For instance, if I set homepage:true then I can write my code in homepage.js
-		 *
-		 * Put other files that you want to have available on each page in the "preload" array.
-		 * For instance, if you want to preload "jquery_cookie.js" then put:
-		 * preload:["jquery_cookie"]
-		 * 
-		 * 
 		 */
 		setup.pages = {
 			homepage: {
-				active:true, 
-				preload:["return_to_quote_button", "jquery_cookie", "qs_homepage"]
+				active:true
 			},
 			commerce: {
-				active:true, 
-				preload:["return_to_quote_button", "jquery_cookie", "commerce_ids"]
+				active:false
 			},
 			commerce_line: {	
-				active:false,
-				preload:[]
+				active:false
 			},
 			config: {
-				active:false, 
-				preload:[]
+				active:false
 			},
 			sitewide: {
-				active:false, 
-				preload:[]
+				active:false
 			}
 		};
 	
@@ -85,7 +74,6 @@ var requirejs, require, define;
 		 see: http://github.com/jrburke/requirejs for details
 		*/
 		//PATCH Mike Wheeler - context pattern vs define
-		// Composure changeset - on quickstartdev.bigmachines.com: http://firefox.bigmachines.com/repo/records/3283/10
 		//define(
 		!function(that){function k(a){for(var b=0,c;c=a[b];b++)c(f)}function l(){var a=g,b=h;c&&(a.length&&(g=[],k(a)),d.resourcesDone&&b.length&&(h=[],k(b)))}function e(){c||(c=!0,i&&clearInterval(i),l())}function b(a){c?a(f):g.push(a);return b}var j=typeof window!=="undefined"&&window.document,c=!j,f=j?document:null,g=[],h=[],d=requirejs||require||{},m=d.resourcesReady,i;if("resourcesReady"in d)d.resourcesReady=function(a){m&&m(a);a&&l()};j&&(document.addEventListener?(document.addEventListener("DOMContentLoaded",
 		e,!1),window.addEventListener("load",e,!1)):window.attachEvent&&(window.attachEvent("onload",e),self===self.top&&(i=setInterval(function(){try{document.body&&(document.documentElement.doScroll("left"),e())}catch(a){}},30))),document.readyState==="complete"&&e());b.withResources=function(a){c&&d.resourcesDone?a(f):h.push(a);return b};b.version="1.0.0";b.load=function(a,c,d,e){e.isBuild?d(null):b(d)};that.ready=b}(require);
@@ -157,7 +145,7 @@ var requirejs, require, define;
 				if(!add.hasOwnProperty(i)) {return;}
 				root[i] = add[i];
 			}
-		}
+		};
 		/**
 		 * The pages object is used to identify which page is being viewed
 		 **/
@@ -202,7 +190,7 @@ var requirejs, require, define;
 			url_regex: ["commerce/display_company_profile.jsp", "/commerce/buyside/document.jsp"],
 			match: function() {
 				//requires a custom variable in the alt-homepage js
-				if(window["bm-framework/is-homepage"]) {return true;}
+				if(window["framework/homepage"]) {return true;}
 				if(typeof jQuery !==  "function") {return false;}
 
 				if(me.window_url.search("commerce/display_company_profile.jsp") > -1) {
@@ -222,17 +210,17 @@ var requirejs, require, define;
 			}
 			require(files);
 		};
-		me.get_doc_number= function() {
+		me.get_doc_number = function() {
 			var number = jQuery("input[name='_document_number']").val();
 			number = parseInt(number);
 
 			//only perform the DOM crawl once per page
 			if(number) {
-				me.get_doc_number = function() { return number; }
+				me.get_doc_number = function() { return number; };
 			}
 
 			return number;
-		}
+		};
 
 		me.test_regex = function(page) {
 			var i, ii, regex = page.url_regex || [];
@@ -245,13 +233,13 @@ var requirejs, require, define;
 			}
 
 			return false;
-		}
+		};
 
 		me.test_match = function(page) {
-			var test = page.match || function() {return true;}
+			var test = page.match || function() {return true;};
 
 			return test();
-		}
+		};
 
 		me.search_for = function(name, page) {
 			//don't check for sitewide code
@@ -269,7 +257,7 @@ var requirejs, require, define;
 					ps.pub("found-match", [name]);
 				};
 			});
-		}
+		};
 
 		me.show_log = function() {				
 			var key, res="", div;
@@ -281,7 +269,7 @@ var requirejs, require, define;
 			div.style.position = "absolute"; div.style.top = "100"; div.style.left = "10";div.style.color="red";
 			div.innerHTML = "bm-framework.js log results:("+res+")";
 			document.body.appendChild(div);
-		}
+		};
 
 		/**
 		 * The magic starts here.
@@ -324,13 +312,12 @@ var requirejs, require, define;
 				}
 			}
 			poll_searches();
-		}
+		};
 
 		me.begin();
 		require.ready(function() {
 			if(debug) { me.show_log(); }
 		});
-		window.setupp = setup;
 	};
 	
 	//only load if there is an active page
