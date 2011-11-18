@@ -66,9 +66,19 @@ foreach my $file (@upgrade_files) {
 }
 
 chdir($dest);
-zip "<*.{js,css,html}>" => "../javascript.zip"
+zip "<*.{js,css,html}>" => "../support/javascript.zip"
         or die "zip failed: $ZipError\n";
+
+chdir("../support");
+zip "<*.*>" => "../GS.COE.JA.05 - JavaScript Starter Kit.zip"
+        or die "zip failed: $ZipError\n";
+
 chdir("../..");
 chdir($upgrade_dest);
-zip "<*.{js,css,html}>" => "../javascript.zip"
+zip "<*.{js,css,html}>" => "../support/javascript.zip"
         or die "zip failed: $ZipError\n";
+
+chdir("../support");
+zip "<*.*>" => "../GS.COE.JA.18 - JavaScript Framework 2.0 Upgrade Kit.zip"
+        or die "zip failed: $ZipError\n";
+

@@ -1,6 +1,6 @@
 /**
  * The BigMachines JavaScript Framework v2
- * @version Fri Nov 18 12:42:21 2011
+ * @version Fri Nov 18 12:48:58 2011
  **/
 (function() { 
 		var setup = {}, initiate_require, bootstrap;
