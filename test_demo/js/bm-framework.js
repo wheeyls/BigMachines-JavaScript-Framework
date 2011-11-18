@@ -1,8 +1,7 @@
 /**
  * The BigMachines JavaScript Framework v2
- * @version Mon Sep 19 15:39:20 2011
+ * @version Tue Nov 15 18:16:50 2011
  **/
-var requirejs, require, define;
 (function() { 
 		var setup = {}, initiate_require, bootstrap;
 		/**
@@ -39,9 +38,7 @@ var requirejs, require, define;
 		 Available via the MIT or new BSD license.
 		 see: http://github.com/jrburke/requirejs for details
 		*/
-		// PATCH by Michael Wheeler. These variables will be mapped globally.
-		// var requirejs, require, define;
-		// END PATCH
+		var requirejs, require, define;
 		(function(){function J(b){return M.call(b)==="[object Function]"}function E(b){return M.call(b)==="[object Array]"}function Z(b,c,i){for(var j in c)if(!(j in K)&&(!(j in b)||i))b[j]=c[j];return d}function N(b,c,d){b=Error(c+"\nhttp://requirejs.org/docs/errors.html#"+b);if(d)b.originalError=d;return b}function $(b,c,d){var j,l,q;for(j=0;q=c[j];j++){q=typeof q==="string"?{name:q}:q;l=q.location;if(d&&(!l||l.indexOf("/")!==0&&l.indexOf(":")===-1))l=d+"/"+(l||q.name);b[q.name]={name:q.name,location:l||
 		q.name,main:(q.main||"main").replace(da,"").replace(aa,"")}}}function V(b,c){b.holdReady?b.holdReady(c):c?b.readyWait+=1:b.ready(!0)}function ea(b){function c(a,h){var e,s;if(a&&a.charAt(0)==="."&&h){p.pkgs[h]?h=[h]:(h=h.split("/"),h=h.slice(0,h.length-1));e=a=h.concat(a.split("/"));var b;for(s=0;b=e[s];s++)if(b===".")e.splice(s,1),s-=1;else if(b==="..")if(s===1&&(e[2]===".."||e[0]===".."))break;else s>0&&(e.splice(s-1,2),s-=2);s=p.pkgs[e=a[0]];a=a.join("/");s&&a===e+"/"+s.main&&(a=e)}return a}function i(a,
 		h){var e=a?a.indexOf("!"):-1,b=null,d=h?h.name:null,f=a,k,i;e!==-1&&(b=a.substring(0,e),a=a.substring(e+1,a.length));b&&(b=c(b,d));a&&(b?k=(e=n[b])&&e.normalize?e.normalize(a,function(a){return c(a,d)}):c(a,d):(k=c(a,d),i=E[k],i||(i=g.nameToUrl(k,null,h),E[k]=i)));return{prefix:b,name:k,parentMap:h,url:i,originalName:f,fullName:b?b+"!"+(k||""):k}}function j(){var a=!0,h=p.priorityWait,e,b;if(h){for(b=0;e=h[b];b++)if(!t[e]){a=!1;break}a&&delete p.priorityWait}return a}function l(a,h,e){return function(){var b=
@@ -68,16 +65,35 @@ var requirejs, require, define;
 		"/":"./",r.baseUrl=v,B=A.replace(aa,"");r.deps=r.deps?r.deps.concat(B):[B];break}}}d.checkReadyState=function(){var b=w.contexts,c;for(c in b)if(!(c in K)&&b[c].waitCount)return;d.resourcesReady(!0)};d.resourcesReady=function(b){var c,i;d.resourcesDone=b;if(d.resourcesDone)for(i in b=w.contexts,b)if(!(i in K)&&(c=b[i],c.jQueryIncremented))V(c.jQuery,!1),c.jQueryIncremented=!1};d.pageLoaded=function(){if(document.readyState!=="complete")document.readyState="complete"};if(G&&document.addEventListener&&
 		!document.readyState)document.readyState="loading",window.addEventListener("load",d.pageLoaded,!1);d(r);if(d.isAsync&&typeof setTimeout!=="undefined")C=w.contexts[r.context||"_"],C.requireWait=!0,setTimeout(function(){C.requireWait=!1;C.takeGlobalQueue();C.jQueryCheck();C.scriptCount||C.resume();d.checkReadyState()},0)}})();
 
+
 		/*
 		 RequireJS domReady 1.0.0 Copyright (c) 2010-2011, The Dojo Foundation All Rights Reserved.
 		 Available via the MIT or new BSD license.
 		 see: http://github.com/jrburke/requirejs for details
 		*/
-		//PATCH Mike Wheeler - context pattern vs define
-		//define(
-		!function(that){function k(a){for(var b=0,c;c=a[b];b++)c(f)}function l(){var a=g,b=h;c&&(a.length&&(g=[],k(a)),d.resourcesDone&&b.length&&(h=[],k(b)))}function e(){c||(c=!0,i&&clearInterval(i),l())}function b(a){c?a(f):g.push(a);return b}var j=typeof window!=="undefined"&&window.document,c=!j,f=j?document:null,g=[],h=[],d=requirejs||require||{},m=d.resourcesReady,i;if("resourcesReady"in d)d.resourcesReady=function(a){m&&m(a);a&&l()};j&&(document.addEventListener?(document.addEventListener("DOMContentLoaded",
-		e,!1),window.addEventListener("load",e,!1)):window.attachEvent&&(window.attachEvent("onload",e),self===self.top&&(i=setInterval(function(){try{document.body&&(document.documentElement.doScroll("left"),e())}catch(a){}},30))),document.readyState==="complete"&&e());b.withResources=function(a){c&&d.resourcesDone?a(f):h.push(a);return b};b.version="1.0.0";b.load=function(a,c,d,e){e.isBuild?d(null):b(d)};that.ready=b}(require);
-		//);
+		/** 
+		 * Composure Changeset of patch. (On quickstartdev): 
+		 * http://firefox.bigmachines.com/repo/records/3283/19 
+		 **/
+		// PATCH - Mike Wheeler - removing define wrapper, and mapping domReady to require.ready 
+		/*define(function(){*/!function(that) {
+		function k(a){for(var b=0,c;c=a[b];b++)c(f)}function l(){var a=g,b=h;c&&(a.length&&(g=[],k(a)),d.resourcesDone&&b.length&&(h=[],k(b)))}function e(){c||(c=!0,i&&clearInterval(i),l())}function b(a){c?a(f):g.push(a);return b}var j=typeof window!=="undefined"&&window.document,c=!j,f=j?document:null,g=[],h=[],d=requirejs||require||{},m=d.resourcesReady,i;if("resourcesReady"in d)d.resourcesReady=function(a){m&&m(a);a&&l()};j&&(document.addEventListener?(document.addEventListener("DOMContentLoaded",
+		e,!1),window.addEventListener("load",e,!1)):window.attachEvent&&(window.attachEvent("onload",e),self===self.top&&(i=setInterval(function(){try{document.body&&(document.documentElement.doScroll("left"),e())}catch(a){}},30))),document.readyState==="complete"&&e());b.withResources=function(a){c&&d.resourcesDone?a(f):h.push(a);return b};b.version="1.0.0";b.load=function(a,c,d,e){e.isBuild?d(null):b(d)};
+		// PATCH - Mike Wheeler - removing define wrapper, and mapping domReady to require.ready 
+		/*return b});*/that.ready=b;}(require);
+
+
+
+
+		// Mike Wheeler 11/18/2011
+		// expose the require library to the Global Scope
+		var expose = function(varname, val) {
+			// yield to require if it already exists
+			window[varname] = window[varname] || val;
+		};
+		expose("require", require); 
+		expose("define", define);
+		expose("requirejs", requirejs); 
 	};
 	/**
 	 * The Bootstrap, by Michael Wheeler
@@ -86,7 +102,7 @@ var requirejs, require, define;
 	 *  - Which page is currently being viewed in BigMachines
 	 **/
 	bootstrap = function() {
-		var me = {}, ps = {}, log = {}, debug = false;
+		var me = {}, ps = {}, log = {}, debug = window["framework/debug"] || false;
 
 		if(!setup) {return;}
 
