@@ -2,7 +2,7 @@
 * @namespace A module to add a "Return To Quote" button on the homepage, based on a recent quote.
 *
 * @name return_to_quote_button
-* @version Fri Nov 18 13:03:26 2011
+* @version Fri Nov 18 16:35:01 2011
 * @requires jquery.cookie
 **/
 define(["jquery_cookie"], function() {
