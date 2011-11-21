@@ -14,7 +14,7 @@ my $src = @ARGV[0] || "test_demo/js";
 my $dest = @ARGV[1] || "js_starter/javascript";
 my $upgrade_dest = @ARGV[2] || "js_upgrade/javascript";
 
-my @list = qw(bm-framework.js text.js return_to_quote_button.js commerce_ids.js jquery_cookie.js);
+my @list = qw(bm-framework.js upgrade.html text.js return_to_quote_button.js commerce_ids.js jquery_cookie.js);
 my @from_template = qw(commerce.js commerce_line.js config.js homepage.js sitewide.js);
 my @upgrade_files = qw(bm-framework.js upgrade.html text.js return_to_quote_button.js);
 my @all_files = @list;
@@ -66,19 +66,10 @@ foreach my $file (@upgrade_files) {
 }
 
 chdir($dest);
-zip "<*.{js,css,html}>" => "../support/javascript.zip"
-        or die "zip failed: $ZipError\n";
-
-chdir("../support");
-zip "<*.*>" => "../GS.COE.JA.05 - JavaScript Starter Kit.zip"
+zip "<*.{js,css,html}>" => "../GS.COE.JA.05 - JavaScript Starter Kit/javascript.zip"
         or die "zip failed: $ZipError\n";
 
 chdir("../..");
 chdir($upgrade_dest);
-zip "<*.{js,css,html}>" => "../support/javascript.zip"
+zip "<*.{js,css,html}>" => "../GS.COE.JA.18 - JavaScript Framework 2.0 Upgrade Kit/javascript.zip"
         or die "zip failed: $ZipError\n";
-
-chdir("../support");
-zip "<*.*>" => "../GS.COE.JA.18 - JavaScript Framework 2.0 Upgrade Kit.zip"
-        or die "zip failed: $ZipError\n";
-
