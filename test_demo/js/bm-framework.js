@@ -86,6 +86,12 @@
 
 
 		// Mike Wheeler 11/18/2011
+		// require options
+		require.config({
+			baseUrl: "/bmfsweb/" + _BM_HOST_COMPANY + "/image/javascript", 
+			waitSeconds: 15
+		}); 
+
 		// expose the require library to the Global Scope
 		var expose = function(varname, val) {
 			// yield to require if it already exists
@@ -109,11 +115,6 @@
 		if(typeof _BM_HOST_COMPANY !== "string") { 
 			throw new Error("BigMachines Framework Critical Error. Can't determine the path to the file manager for this site, because _BM_HOST_COMPANY is not available.");
 		}
-
-		require.config({
-			baseUrl: "/bmfsweb/" + _BM_HOST_COMPANY + "/image/javascript", 
-			waitSeconds: 15
-		}); 
 
 		me.window_url = document.location.href;
 
@@ -158,7 +159,7 @@
 			//don't spend time on inactive pages
 			if(!root || !root.active) {return;}
 			for(i in add) {
-				if(!add.hasOwnProperty(i)) {return;}
+				if(!add.hasOwnProperty(i)) {continue;}
 				root[i] = add[i];
 			}
 		};
@@ -278,6 +279,7 @@
 		me.show_log = function() {				
 			var key, res="", div;
 			for(key in log) {
+				if(!log.hasOwnProperty(key)) {continue;}
 				res += key + ": " + log[key]+"; ";
 			}
 					
@@ -308,6 +310,7 @@
 			window.setTimeout(function() {ps.pub("search-timeout");}, timeout);
 
 			for(i in testees) {
+				if(!testees.hasOwnProperty(i)) {continue;}
 				if(testees[i].active !== true) {continue;}
 				curr_page = setup.pages[i];
 				if(!curr_page) {
@@ -340,6 +343,7 @@
 	(function() {
 		var i, go = false;
 		for(i in setup.pages) {
+			if(!setup.pages.hasOwnProperty(i)) {continue;}
 			if(setup.pages[i].active === true){go=true;break;}
 		}
 		if(go) {initiate_require();bootstrap();}
