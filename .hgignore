@@ -1,3 +1,5 @@
-js_starter/*
-js_upgrade/*
+syntax: glob
+*.zip
+js_starter\javascript\*
+js_upgrade\javascript\*
 .DS_Store
