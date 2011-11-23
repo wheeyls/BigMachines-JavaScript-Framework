@@ -83,7 +83,7 @@
 				<p><b>Will Wait for the Following Tests to Pass: </b></p>
 				<ul>
 				<% for(var i=0, ii=wait_for.length; i<ii; i++) { %>
-					<li><%= wait_for[i] %><a class="ignore" href="#" data-event="<%= wait_for[i] %>">(Fake It)</a></li>
+					<li><%= wait_for[i].name %><a class="ignore" href="#" data-event="<%= wait_for[i].event_name %>">(Fake It)</a></li>
 				<% } %>
 				</ul>
 			<% } %>

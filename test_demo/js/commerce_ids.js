@@ -5,9 +5,7 @@
 * @requires manager
 * @version 02/25/2011
 **/
-define(["manager"],function(mgr) {
-	mgr.register("commerce_ids");
-
+define([],function(mgr) {
 	var commerce_ids = {};
 
 	/**

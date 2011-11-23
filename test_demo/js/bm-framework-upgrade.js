@@ -21,7 +21,7 @@
     return new F;
 	},
 	eventify = function(str, reverse) {
-		return !reverse ? str.replace(/[+ &\/]{1}/g, "___") : str.replace(/___/g, " ");
+		return !reverse ? str.replace(/[+ &\/]{1}/g, "__") : str.replace(/__/g, " ");
 	},
 
 	/* the first test - a root prototype. checks the header footer */
@@ -31,7 +31,8 @@
 		id: "header",
 		regex: /allplugins-require/,
 		name: "Header/Footer",
-		wait_for: [], 
+		event_name:"",
+		wait_for: [],
 		has_run: false,
 		is_built: false,
 		is_clean: false,
@@ -40,21 +41,23 @@
 		warning_passes: true,
 		desc: "Any sitewide code in the old framework would have been implemented by adding a script tag to the header/footer, with the src set to allplugins-require.js. Remove this reference. If you remove this code, you will most likely also need to mark 'sitewide' as active in bm-framework.js.",
 		begin: function() {
-			var promises = [], i, ii, me = this;
+			var promises = [], i, ii, me = this; 
+			me.event_name = eventify(me.id);
 
-			_(me.wait_for).each(function(val, list) {
-				var curr = jq$.Deferred(), event_name = eventify(val);
+			_(me.wait_for).each(function(test, list) {
+				var defer = jq$.Deferred(),
+					event_name = eventify(test.id);
 
 				jq$(document).bind( event_name, function() {
-					curr.resolve( val );
+					defer.resolve( test );
 				});
 
 				jq$(document).bind( "abort-tests", function() {
-					curr.reject( val );
+					defer.reject( test );
 					jq$(document).unbind( event_name );
 				});
 
-				promises.push(curr.promise());
+				promises.push(defer.promise());
 			});
 
 			jq$.when.apply(me, promises).then(function() {
@@ -116,17 +119,20 @@
 		},
 		run: function() {
 			var promise = this.get_text(), me = this;
-			me.event_name = eventify(me.name);
+			me.event_name = eventify(me.id);
 			promise.then(function(data) {
+				//warning
 				if(data === "WARNING" && me.warning_passes === false) {
 					me.has_warning = true;
+				//fail
 				} else if(data.match(me.regex)) {
 					me.is_clean = false;
 					me.has_warning = false;
+				//pass
 				} else {
 					me.is_clean = true;
 					me.has_warning = false;
-					jq$(document).trigger(me.event_name, [me]);
+					jq$(document).trigger(me.event_name);
 				}
 				me.has_run = true;
 				me.is_running = false;
@@ -144,17 +150,21 @@
 		warning_passes: false,
 		run: function() {
 			var promise = this.get_text(), me = this;
-			me.event_name = eventify(me.name);
+			me.event_name = eventify(me.id);
+
 			promise.then(function(data) {
+				//warning
 				if(data === "WARNING" && me.warning_passes === false) {
 					me.has_warning = true;
+				//pass
 				} else if(data.match(me.regex)) {
 					me.is_clean = true;
 					me.has_warning = false;
+					jq$(document).trigger(me.event_name);
+				//fail
 				} else {
 					me.is_clean = false;
 					me.has_warning = false;
-					jq$(document).trigger(me.event_name, [me]);
 				}
 				me.has_run = true;
 				me.is_running = false;
@@ -177,12 +187,21 @@
 
 		this.tests.push(item);
 	};
-	Collection.prototype.get_by_id = function(id) {
-		var idx = _(this.tests).find(function(val) {
-			return val.id === id;
+	//pass in ids as comma separated strings
+	Collection.prototype.find_by_ids = function() {
+		var result = [], me = this;
+		
+		_(arguments).each(function(id) {
+			var item = _(me.tests).find(function(val) {
+				return val.id === id;
+			});
+
+			if(item) {
+				result.push(item);
+			}
 		});
 
-		return this.tests[idx];
+		return result;
 	};
 
 
@@ -203,7 +222,6 @@
 				id: "framework-found",
 				name: "new bm-framework file",
 				desc: "The JavaScript framework 2.0 requires that the file bm-framework.js be loaded into the javascript folder in the file manager. You can get this file from the JavaScript Starter Kit. If this test is not passing, check that the sitename you entered on this page is correct, and also check the name of the case-sensitive 'javascript' folder.",
-				wait_for: [],
 				regex: /bootstrap/,
 				test_url: function() { return "/bmfsweb/"+templates.sitename+"/image/javascript/bm-framework.js" },
 				fix_url: function() { return "/admin/filemanager/list_files.jsp"; }
@@ -215,7 +233,6 @@
 				id: "text-found",
 				name: "new text js file",
 				desc: "The JavaScript framework 2.0 requires that the file text.js be loaded into the javascript folder in the file manager. You can get this file from the JavaScript Starter Kit. If this test is not passing, check that the sitename you entered on this page is correct, and also check the name of the case-sensitive 'javascript' folder.",
-				wait_for: [],
 				regex: /.*/,
 				test_url: function() { return "/bmfsweb/"+templates.sitename+"/image/javascript/text.js";},
 				fix_url: function() { return "/admin/filemanager/list_files.jsp";}
@@ -237,7 +254,6 @@
 				warning_passes: false,
 				name: "replace allplugins-require.js",
 				desc: "In 1.0, the file javascript/allplugins-require.js was the core of the framework. By replacing it with a dummy file, we are effectively disabling the old framework, without creating 404 errors on the server.<br/> If this test is failing, it means that we have detected the previous file in place.<br/> If you get a warning, it may mean that the file doesn't exist. This can be okay - just make sure that you remove all references to it in other places.",
-				wait_for: [],
 				regex: /define/,
 				test_url: function() { return "/bmfsweb/"+templates.sitename+"/image/javascript/allplugins-require.js";},
 				fix_url: function() { return "/admin/filemanager/list_files.jsp";}
@@ -253,7 +269,6 @@
 				id: "homepage-remove",
 				name: "Home Page Alt JS - remove",
 				desc: "The references to allplugins-require.js need to be removed from the home page alternate JS file. This test fails when that old code is detected, and will show a warning if it can't find the file. In case of failure you can remove the entire function 'include_homepage_js', which is how the old code was loaded on the home page. As part of the upgrade, you will also be replacing this Alt JS file with a new piece of code. If you do remove this code, make sure that 'homepage' is marked as active in bm-framework.js.",
-				wait_for: [],
 				warning_passes: false,
 				test_url:function() { return  "/bmfsweb/"+templates.sitename+"/homepage/js/"+templates.sitename+"_Hp_Alt.js";},
 				fix_url:function() { return  "/admin/homepage/define_xsl_template.jsp";}
@@ -268,7 +283,7 @@
 				desc: "The JavaScript framework 2.0 uses an (optional) parameter to assist in identifying the home page. This file can be found in the JavaScript Start Kit; it is basically: <code>window['framework/homepage']=true</code>. If this test fails, it means that it found the Alt JS file, but no reference to the new code. A warning means it can't find the file.",
 				warning_passes: false,
 				regex: /framework\/homepage/,
-				wait_for: ["Home Page Alt JS - remove"],
+				wait_for: tests.find_by_ids("homepage-remove"),
 				test_url:function() { return "/bmfsweb/"+templates.sitename+"/homepage/js/"+templates.sitename+"_Hp_Alt.js";},
 				fix_url:function() { return "/admin/homepage/define_xsl_template.jsp";}
 			})
@@ -281,7 +296,7 @@
 				id: "homepagedirect",
 				name: "Home Page",
 				desc: "The home page may have some references to the old framework, that are outside of the alt js file. This could be from a customized Homepage XSL file, or more likely from a custom home page. If this test fails you will have to manually search for and remove these references.",
-				wait_for: ["Header/Footer"],
+				wait_for: tests.find_by_ids("header"),
 				test_url:function() { return  "/commerce/display_company_profile.jsp";},
 				fix_url:function() { return  "/commerce/display_company_profile.jsp";},
 				warning_passes: false
@@ -295,7 +310,7 @@
 				id: "gss-allplugin",
 				name: "Global Script Search-JS",
 				desc: "We are running a global script search for the term 'allplugins-require'. The test will fail if it finds any results. This can be used to identify any BML that is referencing the old framework directly. All these references should be removed. This will NOT show references from default values on config attributes. This will most likely only find one reference - in our BML Util Library 'require_javascript.'",
-				wait_for: ["Home Page Alt JS - remove", "Header/Footer"],
+				wait_for: tests.find_by_ids("homepage-remove", "header"),
 				test_url: function() { return  "/admin/scripts/search_script.jsp?formaction=searchBmScript&search_string=allplugins-require";},
 				fix_url:function() { return  this.test_url(); },
 				get_text: function() {
@@ -319,7 +334,7 @@
 				id: "gss-bml",
 				name: "Global Script Search-BML",
 				desc: "We are running a global script search for the term 'require_javascript'. The test will fail if it finds any results. This can be used to identify any BML that is referencing the now obsolete library that we used to load JavaScript in the Framework v1. These references should be removed, and the corresponding section activated in bm-framework.js.",
-				wait_for: ["Global Script Search-JS"],
+				wait_for: tests.find_by_ids("gss-allplugin"),
 				regex: /require_javascript/,
 				test_url: function() { return  "/admin/scripts/search_script.jsp?formaction=searchBmScript&search_string=require_javascript";},
 				fix_url: function() { return  this.test_url();}
@@ -332,7 +347,7 @@
 				id: "crawl",
 				name: "Begin Home Page Crawl",
 				desc: "This test will crawl the home page for punchin urls, and then spin up a test for each one it finds. This is so that we can quickly crawl the configurators directly on the buyside, and identify which ones reference allplugins-require. Please note that this will only visit the first page of each configurator; it's possible that we will miss some references if they are buried deep within a configurator.",
-				wait_for: ["Header/Footer"],
+				wait_for: tests.find_by_ids("homepage-remove", "header"),
 				regex: /require_javascript/,
 				test_url:function() { return  "/commerce/display_company_profile.jsp";},
 				fix_url:function() { return  "/commerce/display_company_profile.jsp";},
@@ -380,6 +395,7 @@
 			})
 		);
 
+		window.tests = tests;
 		return tests;
 	}
 
