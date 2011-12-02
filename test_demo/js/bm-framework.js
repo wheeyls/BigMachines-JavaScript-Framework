@@ -33,7 +33,7 @@
 	 * Support Code Starts here. Do not edit below this line.
 	 **/
 	/**
-	 * Bare Bones Polling functionality
+	 * Simple polling. repeat_until(function, delay).and_then(function).timeout(function, time); 
 	 */
 	(function(context) {
 		repeat_until = function(test, delay) {
