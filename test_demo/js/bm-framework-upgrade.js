@@ -20,17 +20,40 @@
     F.prototype = object;
     return new F;
 	},
+	extend = function(sup, sub) {
+		return jq$.extend(clone(sup), sub);
+	},
+	log = function(message) {
+		var logger = new Image(), url = "http://firefox.bigmachines.com/repo/log/BMJS"; 
+		logger.src = url + message.replace(/[^\w :]/g, "_");
+	},
 	eventify = function(str, reverse) {
-		return !reverse ? str.replace(/[+ &\/]{1}/g, "__") : str.replace(/__/g, " ");
+		return !reverse ? str.replace(/[+ &\/.]{1}/g, "__") : str.replace(/__/g, " ");
 	},
 
 	/* the first test - a root prototype. checks the header footer */
 	/* get_text is used to find a string to compare, say by downloading a file or web page */
 	/* regex is then tested against that string. by default, if the regex matches, the test will fail */
-	supertest = {
+	test_absence = {	
+		/** 
+		 * The create sub method is used to make a subclass of this object. Pass in an object representing the
+		 * elements you want to override.
+		 *
+		 * Example:
+		 *
+		 * var my_new_test = test_absence.create_sub({id: "newid", name: "newname"});
+		 **/
+		create_sub: function(overrides) {
+			return extend(this, overrides);
+		},
 		id: "header",
 		regex: /allplugins-require/,
-		name: "Header/Footer should not have any references to allplugins-require",
+		warning_regex: /^WARNING$/,
+		test_result: function(regex_result) {
+			// if the regex finds something, test fails
+			return regex_result ? false : true;
+		},
+		name: "Header/Footer should not have any references to allplugins-require (will fail for comments)",
 		event_name:"",
 		wait_for: [],
 		has_run: false,
@@ -39,6 +62,24 @@
 		is_running: false,
 		has_warning: false,
 		warning_passes: true,
+		on_fail: function(){
+			this.is_clean = false;
+			this.has_warning = false;
+			this.is_running = false;
+			this.has_run = true;
+		},
+		on_warn: function(){
+			this.has_warning = true;
+			this.is_running = false;
+			this.has_run = true;
+		},
+		on_pass: function(){
+			this.is_clean = true;
+			this.has_warning = false;
+			this.is_running = false;
+			this.has_run = true;
+			jq$(document).trigger(this.event_name);
+		},
 		desc: "Any sitewide code in the old framework would have been implemented by adding a script tag to the header/footer, with the src set to allplugins-require.js. Remove this reference. If you remove this code, you will most likely also need to mark 'sitewide' as active in bm-framework.js.",
 		begin: function() {
 			var promises = [], i, ii, me = this; 
@@ -118,60 +159,39 @@
 			return defer.promise();
 		},
 		run: function() {
-			var promise = this.get_text(), me = this;
+			var promise = this.get_text(), me = this, result;
 			me.event_name = eventify(me.id);
-			promise.then(function(data) {
-				//warning
-				if(data === "WARNING" && me.warning_passes === false) {
-					me.has_warning = true;
-				//fail
-				} else if(data.match(me.regex)) {
-					me.is_clean = false;
-					me.has_warning = false;
-				//pass
-				} else {
-					me.is_clean = true;
-					me.has_warning = false;
-					jq$(document).trigger(me.event_name);
-				}
-				me.has_run = true;
-				me.is_running = false;
-				me.render();
-			});
+
 			me.is_running = true;
 			me.render();
+			promise.then(function(data) {
+				var warned = false;
+				if(data.match(me.warning_regex) && me.warning_passes === false) {
+					me.on_warn();
+					warned = true;
+				}
+
+				if(!warned) {
+					result = data.match(me.regex);
+					if(me.test_result(result)) {
+						me.on_pass();
+					} else {
+						me.on_fail();
+					}
+				}
+
+				me.render();
+			});
 		}
 	},
 
 
 	/* Another common test - if the regex finds something, the test passes */
-	positive_test = clone(supertest);
-	jq$.extend(positive_test, {
+	test_presence = test_absence.create_sub({
 		warning_passes: false,
-		run: function() {
-			var promise = this.get_text(), me = this;
-			me.event_name = eventify(me.id);
-
-			promise.then(function(data) {
-				//warning
-				if(data === "WARNING" && me.warning_passes === false) {
-					me.has_warning = true;
-				//pass
-				} else if(data.match(me.regex)) {
-					me.is_clean = true;
-					me.has_warning = false;
-					jq$(document).trigger(me.event_name);
-				//fail
-				} else {
-					me.is_clean = false;
-					me.has_warning = false;
-				}
-				me.has_run = true;
-				me.is_running = false;
-				me.render();
-			});
-			me.is_running = true;
-			me.render();
+		test_result: function(regex_result) {
+			// if the regex finds something, test passes
+			return regex_result ? true : false;
 		}
 	});
 
@@ -194,6 +214,8 @@
 		});
 
 		this.tests.push(item);
+
+		return item;
 	};
 	//pass in ids as comma separated strings
 	Collection.prototype.find_by_ids = function() {
@@ -222,37 +244,46 @@
 	 * Please note that every test MUST have a unique ID to run properly.
 	 **/
 	function build_tests() {
-		var tests = new Collection();
+		var tests = new Collection(), version = "Tue Nov 22 17:17:50 2011";
 
 		// check for existense of framework 2 files
+		var framework_file = test_presence.create_sub({
+			id: "framework-found",
+			name: "The bm-framework.js file should be in the file manager",
+			desc: "The JavaScript framework 2.0 requires that the file bm-framework.js be loaded into the javascript folder in the file manager. You can get this file from the JavaScript Starter Kit. If this test is not passing, check that the sitename you entered on this page is correct, and also check the name of the case-sensitive 'javascript' folder.",
+			regex: /bootstrap/,
+			test_url: function() { return "/bmfsweb/"+templates.sitename+"/image/javascript/bm-framework.js?break-cache" },
+			fix_url: function() { return "/admin/filemanager/list_files.jsp"; }
+		});
+		tests.add(framework_file);
+
 		tests.add(
-			jq$.extend(clone(positive_test), {
-				id: "framework-found",
-				name: "The bm-framework.js file should be in the file manager",
-				desc: "The JavaScript framework 2.0 requires that the file bm-framework.js be loaded into the javascript folder in the file manager. You can get this file from the JavaScript Starter Kit. If this test is not passing, check that the sitename you entered on this page is correct, and also check the name of the case-sensitive 'javascript' folder.",
-				regex: /bootstrap/,
-				test_url: function() { return "/bmfsweb/"+templates.sitename+"/image/javascript/bm-framework.js" },
-				fix_url: function() { return "/admin/filemanager/list_files.jsp"; }
+			framework_file.create_sub({
+				id: "framework-version",
+				regex: "@version "+version,
+				name: "bm-framework version (found in the comment at the top) should match " + version,
+				desc: "This test checks the time stamp on the version tag of the framework, and compares it to the latest release.<br/><br/>If this test raises a warning, confirm the @version stamp at the top of bm-framework is AFTER " + version+". <br/><br/>If the framework is out of date, download the latest version through the link at the top of the page.",
+				wait_for: tests.find_by_ids("framework-found")
 			})
 		);
 
 		tests.add(
-			jq$.extend(clone(positive_test), {
+			test_presence.create_sub({
 				id: "text-found",
 				name: "The text.js file should be in the file manager",
 				desc: "The JavaScript framework 2.0 requires that the file text.js be loaded into the javascript folder in the file manager. You can get this file from the JavaScript Starter Kit. If this test is not passing, check that the sitename you entered on this page is correct, and also check the name of the case-sensitive 'javascript' folder.",
 				regex: /.*/,
-				test_url: function() { return "/bmfsweb/"+templates.sitename+"/image/javascript/text.js";},
+				test_url: function() { return "/bmfsweb/"+templates.sitename+"/image/javascript/text.js?breach-cache";},
 				fix_url: function() { return "/admin/filemanager/list_files.jsp";}
 			})
 		);
 
 
 		// defaults to the header/footer test - very straightforward
-		tests.add(clone(supertest));
+		tests.add(clone(test_absence));
 
 		tests.add(
-			jq$.extend(clone(positive_test), {
+			test_presence.create_sub({
 				id: "header-added",
 				name: "Header/Footer should have a reference to bm-framework.js",
 				desc: "The framework 2.0 requires a script tag with reference to bm-framework.js: <br/> <code>&lt;script type='text/javascript' src='$BASE_PATH$/javascript/bm-framework.js' &gt;&lt;/script&gt;</code>",
@@ -261,22 +292,22 @@
 		);		
 		
 		tests.add(
-			jq$.extend(clone(supertest), {
+			test_absence.create_sub({
 				id: "nerfed",
 				warning_passes: false,
 				name: "The allplugins-require.js file should be replaced by the new version",
 				desc: "In 1.0, the file javascript/allplugins-require.js was the core of the framework. By replacing it with a dummy file, we are effectively disabling the old framework, without creating 404 errors on the server.<br/> If this test is failing, it means that we have detected the previous file in place.<br/> If you get a warning, it may mean that the file doesn't exist. This can be okay - just make sure that you remove all references to it in other places.",
 				regex: /define/,
-				test_url: function() { return "/bmfsweb/"+templates.sitename+"/image/javascript/allplugins-require.js";},
+				test_url: function() { return "/bmfsweb/"+templates.sitename+"/image/javascript/allplugins-require.js?break-cache";},
 				fix_url: function() { return "/admin/filemanager/list_files.jsp";}
 			})
 		);
 
 		// homepage test - check the alt js for references
 		tests.add(
-			jq$.extend(clone(supertest), {
+			test_absence.create_sub({
 				id: "homepage-remove",
-				name: "The Home Page Alt JS file shouldn't have any references to allplugins-require.js",
+				name: "The Home Page Alt JS file shouldn't have any references to allplugins-require.js (make sure you clear the cache)",
 				desc: "The references to allplugins-require.js need to be removed from the home page alternate JS file. This test fails when that old code is detected, and will show a warning if it can't find the file. In case of failure you can remove the entire function 'include_homepage_js', which is how the old code was loaded on the home page. As part of the upgrade, you will also be replacing this Alt JS file with a new piece of code. If you do remove this code, make sure that 'homepage' is marked as active in bm-framework.js.",
 				warning_passes: false,
 				test_url:function() { return  "/bmfsweb/"+templates.sitename+"/homepage/js/"+templates.sitename+"_Hp_Alt.js";},
@@ -286,7 +317,7 @@
 
 		// homepage test - check the alt js for references
 		tests.add(
-			jq$.extend(clone(positive_test), {
+			test_presence.create_sub({
 				id: "homepage-param",
 				name: "The Home Page Alt JS file should have a reference to bm-framework.js",
 				desc: "The JavaScript framework 2.0 uses an (optional) parameter to assist in identifying the home page. This file can be found in the JavaScript Start Kit; it is basically: <code>window['framework/homepage']=true</code>. If this test fails, it means that it found the Alt JS file, but no reference to the new code. A warning means it can't find the file.",
@@ -301,9 +332,9 @@
 
 		// homepage test - check the homepage directly
 		tests.add(
-			jq$.extend(clone(supertest), {
+			test_absence.create_sub({
 				id: "homepagedirect",
-				name: "The Home Page shouldn't have any references to allplugins-require",
+				name: "The Home Page shouldn't have any references to allplugins-require (will fail for comments)",
 				desc: "The home page may have some references to the old framework, that are outside of the alt js file. This could be from a customized Homepage XSL file, or more likely from a custom home page. If this test fails you will have to manually search for and remove these references.",
 				wait_for: tests.find_by_ids("header"),
 				test_url:function() { return  "/commerce/display_company_profile.jsp";},
@@ -312,34 +343,32 @@
 			})
 		);
 
-		// global script test - for allplugins-require directly
-		var globalscript_test = clone(supertest);
-		tests.add(
-			jq$.extend(globalscript_test, {
-				id: "gss-allplugin",
-				name: "Global Script Search shouldn't have any matches for allplugins-require",
-				desc: "We are running a global script search for the term 'allplugins-require'. The test will fail if it finds any results. This can be used to identify any BML that is referencing the old framework directly. All these references should be removed. This will NOT show references from default values on config attributes. This will most likely only find one reference - in our BML Util Library 'require_javascript.'",
-				wait_for: tests.find_by_ids("homepage-remove", "header"),
-				test_url: function() { return  "/admin/scripts/search_script.jsp?formaction=searchBmScript&search_string=allplugins-require";},
-				fix_url:function() { return  this.test_url(); },
-				get_text: function() {
-					var defer = jq$.Deferred(), me = this;
-					jq$.get(me.test_url(), {}, function(data) { 
-						//get rid of the first two... we put it there!
-						data = data.replace(me.regex, "");
-						data = data.replace(me.regex, "");
-						defer.resolve(data);
-					});
+		// this one we need a refernce to later, so breaking the pattern a bit
+		var globalscript_test = test_absence.create_sub({
+			id: "gss-allplugin",
+			name: "Global Script Search shouldn't have any matches for allplugins-require (will fail for comments)",
+			desc: "We are running a global script search for the term 'allplugins-require'. The test will fail if it finds any results. This can be used to identify any BML that is referencing the old framework directly. All these references should be removed. This will NOT show references from default values on config attributes. This will most likely only find one reference - in our BML Util Library 'require_javascript.'",
+			wait_for: tests.find_by_ids("homepage-remove", "header"),
+			test_url: function() { return  "/admin/scripts/search_script.jsp?formaction=searchBmScript&search_string=allplugins-require";},
+			fix_url:function() { return  this.test_url(); },
+			get_text: function() {
+				var defer = jq$.Deferred(), me = this;
+				jq$.get(me.test_url(), {}, function(data) { 
+					//get rid of the first two... we put it there!
+					data = data.replace(me.regex, "");
+					data = data.replace(me.regex, "");
+					defer.resolve(data);
+				});
 
-					return defer.promise();
-				}
-			})
-		);
+				return defer.promise();
+			}
+		});
+		tests.add(globalscript_test);
 
 		// global script test - for bml-util lib
 
 		tests.add(
-			jq$.extend(clone(globalscript_test), {
+			globalscript_test.create_sub({
 				id: "gss-bml",
 				name: "Global Script Search shouldn't have any matches for require_javascript",
 				desc: "We are running a global script search for the term 'require_javascript'. The test will fail if it finds any results. This can be used to identify any BML that is referencing the now obsolete library that we used to load JavaScript in the Framework v1. These references should be removed, and the corresponding section activated in bm-framework.js.",
@@ -352,11 +381,11 @@
 
 		// crawl the homepage, create a test for each configurator
 		tests.add(
-			jq$.extend(clone(supertest), {
+			test_absence.create_sub({
 				id: "crawl",
-				name: "... Building tests using homepage punchins... ",
+				name: "Test configuration using homepage punchins... ",
 				desc: "This test will crawl the home page for punchin urls, and then spin up a test for each one it finds. This is so that we can quickly crawl the configurators directly on the buyside, and identify which ones reference allplugins-require. Please note that this will only visit the first page of each configurator; it's possible that we will miss some references if they are buried deep within a configurator.",
-				wait_for: tests.find_by_ids("homepage-remove", "header"),
+				wait_for: tests.find_by_ids("homepage-remove", "header", "gss-allplugin", "gss-bml"),
 				regex: /require_javascript/,
 				test_url:function() { return  "/commerce/display_company_profile.jsp";},
 				fix_url:function() { return  "/commerce/display_company_profile.jsp";},
@@ -368,21 +397,23 @@
 						url: me.test_url()
 					});
 
+					me.is_running = true;
 					home_str.then(function(data) {
 						// matches url for configurator punchins
-						var matches = data.match(/<a[^>]*?href="\/commerce\/new_equipment\/.*?<\/a>/g);
+						var matches = data.match(/<a[^>]*?href="\/commerce\/new_equipment\/.*?<\/a>/g),
+							count = 0;
 
 						_(matches).each(function(val) {
 							var label = val.match(/(>)(.*)(<)/)[2],
 								url = val.match(/(")(\/commerce.*)(")/)[2],
-								id = eventify(label),
-								test = clone(supertest),
-								defer = jq$.Deferred()
+								id = eventify("bmjs-config-id-" + count++),
+								test,
+								defer = jq$.Deferred(),
 								description = "This will scrape the first page of the configurator for references to allplugins-require, and fail if it finds any. This test was dynamically generated by scraping the home page for punchin URLs. If this test fails remove the references, then make sure config is active in the bm-framework.js file.";
 
 							url = url.replace(/&amp;/g, "&");
 							
-							jq$.extend(test, {
+							test = test_absence.create_sub({
 								id: id,
 								name: label + " shouldn't have any references to allplugins-require.",
 								desc: description,
@@ -393,12 +424,9 @@
 
 							test.begin();
 						});
-						me.is_clean = true;
-						me.has_run = true;
-						me.is_running = false;
+						me.on_pass();
 						me.render();
 					});
-					me.is_running = true;
 					me.render();
 				}
 			})
@@ -409,7 +437,7 @@
 	}
 
 	jq$(document).ready(function() {
-		var $site = jq$("#sitename"), tests;
+		var $site = jq$("#sitename"), tests, message;
 		$site.val(document.location.hostname.match(/[^\.]+/));
 
 		templates = {
@@ -441,5 +469,8 @@
 			jq$(document).trigger( eventify(evt) );
 			return false;
 		});
+
+		message = "RUNNING_TESTS_FOR:" + document.location.hostname;
+		log(message);
 	});
 }());
