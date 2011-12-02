@@ -379,13 +379,32 @@
 			})
 		);
 
+		tests.add(
+			test_absence.create_sub({
+				id: "start-configs",
+				name: "Run this test again manually to begin the configuration tests.",
+				desc: "This test will run and fail the first time - you must manually run it in order to begin the configuration tests, which can be time intensive.",
+				times: 0,
+				run: function() {
+					if(this.times === 0) {
+						this.times += 1;
+						this.on_fail();
+						this.render();
+					} else {
+						this.on_pass();
+						this.render();
+					}
+				}
+			})
+		);
+
 		// crawl the homepage, create a test for each configurator
 		tests.add(
 			test_absence.create_sub({
 				id: "crawl",
 				name: "Test configuration using homepage punchins... ",
 				desc: "This test will crawl the home page for punchin urls, and then spin up a test for each one it finds. This is so that we can quickly crawl the configurators directly on the buyside, and identify which ones reference allplugins-require. Please note that this will only visit the first page of each configurator; it's possible that we will miss some references if they are buried deep within a configurator.",
-				wait_for: tests.find_by_ids("homepage-remove", "header", "gss-allplugin", "gss-bml"),
+				wait_for: tests.find_by_ids("homepage-remove", "header", "gss-allplugin", "gss-bml", "start-configs"),
 				regex: /require_javascript/,
 				test_url:function() { return  "/commerce/display_company_profile.jsp";},
 				fix_url:function() { return  "/commerce/display_company_profile.jsp";},
