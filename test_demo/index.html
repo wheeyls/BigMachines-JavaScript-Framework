@@ -1,13 +1,179 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="js/qunit.css"/>
+		<link rel="stylesheet" href="js/qunit.js"/>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
 		<script src="js/qunit.js" type="text/javascript"></script>
-		<script src="js/allplugins-require.js" data-main="js/homepage" type="text/javascript"></script>
-		<script>
-			$(document).ready(function() {
-				alert("do something");
-			});
+		<script src="js/allplugins-require.js" data-main="never-load.js"></script>
+		<script>window["framework/testing-hook"] = {};</script>
+		<script src="js/bm-framework.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			(function() {
+				window._BM_HOST_COMPANY = "dummyname";
+				var hook = window["framework/testing-hook"];
+				module("repeat_until", {
+					setup: function() { },
+					teardown: function() { }
+				});
+				test("works by itself", function() {
+					var count = 0;
+					hook.repeat_until(function() { count+=1;return count; }, 0);
+					ok(count === 1, "no delay, so synchronous");
+				});
+				asyncTest("on pass and_then is called", function() {
+					var count = 0;
+					hook.repeat_until(function() { 
+						count+=1;
+						return count === 2 ? count : false; 
+					}, 0).and_then(function(c) {
+						start();
+						equal(count, c, "value passed through to and_then");
+					});
+				});
+				asyncTest("on fail timeout is called", function() {
+					hook.repeat_until(function() { 
+						return false; 
+					}, 0).and_then(function(c) {
+						start(); ok(false, "should not have gotten here");
+					}).timeout(function(c) {
+						start(); ok(true, "failed as expected");
+					}, 0);
+				});
+				test("and_then can be checked later", function() {
+					var x = hook.repeat_until(function() {
+						return true;
+					});
+					x.and_then(function(val) {
+						ok(val, "Successfully processed");
+					});
+				});
+				asyncTest("timeout can be applied later", function() {
+					var x = hook.repeat_until(function() {
+						return false;
+					}, 0);
+					x.timeout(function() {
+						start();
+						ok(true, "Successfully applied timeout");
+					}, 0);
+				});
+				test("works in whatever order", function() {
+					hook.repeat_until(function() {
+						return true;
+					}).timeout(function() {
+						ok(false, "should not have timed out");
+					}).and_then(function(val) {
+						ok(val, "true returned from repeater");
+					});
+				});
+				module("pubsub", {
+					setup: function() { 
+						hook.pubsub.clear(); 
+					},
+					teardown: function() { 
+						hook.pubsub.clear(); 
+					}
+				});
+				test("subscribe and publish, and then clear", function() {
+					var ps = hook.pubsub, count = 0, item1 = "a", item2 = "b";
+					function tester(pass1, pass2) {
+						count += 1; 
+						equals(pass1, item1, "properties match");
+						equals(pass2, item2, "properties match");
+					};
+					ps.sub("custom", tester);
+					ps.sub("custom", tester);
+					ps.pub("custom", [item1, item2]);
+					ok(count === 2, "triggered twice");
+					count = 0;
+					ps.clear("custom");
+					ps.pub("custom", [item1, item2]);
+					ok(count === 0, "not triggered");
+				});
+				module("bootstrap", {
+					setup: function() { 
+						hook.pubsub.clear(); 
+					},
+					teardown: function() { 
+						hook.pubsub.clear(); 
+					}
+				});
+				function stub_require(obj) {
+					var temp = window.require,
+					stub = function() {
+						obj.args = arguments;
+					};
+					stub.ready = function(){
+						obj.ready_args = arguments;
+					};
+					 
+					window.require = stub;
+
+					function undo() {
+						window.require = temp;
+					}
+
+					return {
+						obj: obj,
+						undo: undo
+					}
+				}
+				test("active pages subscribed to and launched", function() {
+					var obj = {}, stub = stub_require(obj), 
+						fakepage = {
+							active: true,
+							url_regex: [/.*/],
+							match: function() {
+								ok(true, "passed regex test properly");
+								return true;
+							}
+						};
+					hook.setup.pages.fakepage = fakepage;
+					hook.bootstrap(hook);
+					same(obj.args[0], ["fakepage"], "page tested and require should be called");
+
+					obj.args = [];
+					fakepage.active = false;
+					hook.bootstrap(hook);
+					same(obj.args, [], "inactive pages should NOT be called");
+
+					obj.args = [];
+					hook.setup.pages.fakepage = {always: true, active: true};
+					hook.bootstrap(hook);
+					same(obj.args[0], ["fakepage"], "active pages with 'always' set should be called");
+
+					//fix require
+					stub.undo();
+				});
+
+				asyncTest("will poll active pages until match passes", function() {
+					expect(6);
+					var obj = {}, stub = stub_require(obj), 
+						count = 0, 
+						fakepage = {
+							active: true,
+							url_regex: [/.*/],
+							match: function() {
+								ok(true, "running match test");
+								count++;
+								return count === 2;
+							}
+						};
+					hook.setup.pages.fakepage = fakepage;
+
+					hook.pubsub.sub("searches", function(name) {
+						ok(true, "searches polling");
+					});
+					hook.pubsub.sub("found-match", function(name) {
+						start();
+						equals(name, "fakepage", "fakepage called");
+						equals(2, count, "tried multiple tests");
+					});
+
+					hook.bootstrap(hook);
+
+					stub.undo();
+				});
+			}());
 		</script>
 	</head>
 	<body>
