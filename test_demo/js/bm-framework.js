@@ -1,9 +1,9 @@
 /**
  * The BigMachines JavaScript Framework v2
- * @version Tue Nov 15 18:16:50 2011
+ * @version Tue Nov 22 17:17:50 2011
  **/
-(function() { 
-		var setup = {}, initiate_require, bootstrap;
+(function(context) { 
+		var setup = {}, initiate_require, bootstrap, repeat_until;
 		/**
 		 * This is the setup section of the BigMachines JavaScript Framework.
 		 * Set "active" to true for any pages that you want to customize with Javascript
@@ -16,13 +16,13 @@
 				active:true
 			},
 			commerce: {
-				active:false
+				active:true
 			},
 			commerce_line: {	
-				active:false
+				active:true
 			},
 			config: {
-				active:false
+				active:true
 			},
 			sitewide: {
 				active:false
@@ -32,7 +32,88 @@
 	/**
 	 * Support Code Starts here. Do not edit below this line.
 	 **/
-	initiate_require = function() {
+	/**
+	 * Simple polling. repeat_until(function, delay).and_then(function).timeout(function, time); 
+	 */
+	(function(context) {
+		repeat_until = function(test, delay) {
+			var done = false, me,
+				success_timer, success_callback, failure_timer, test_result, repeat;
+
+			delay = delay !== undefined ? delay : 20;
+
+			repeat = function() {
+				test_result = test();
+				if(test_result === false) {
+					success_timer = window.setTimeout(repeat, delay);
+				} else {
+					done = true;
+					if(success_callback) {
+						success_callback(test_result);
+					}
+					window.clearTimeout(failure_timer);
+				}
+			};
+
+			me = {
+				and_then: function(success) {
+					success_callback = success;
+					if(done && test_result !== false) {
+						success_callback(test_result);
+					}
+					return me;
+				},
+				timeout: function(failure, time) {
+					time = time !== undefined ? time : 7000;
+					failure_timer = window.setTimeout(function() {
+						if(!done) {
+							done = true;
+							failure();
+							window.clearTimeout(success_timer);
+						}
+					}, time);
+					return me;
+				}
+			};
+
+			repeat();
+
+			return me;
+		};
+		context.repeat_until = repeat_until;
+	}(context));
+	/**
+	 * Bare-bones, fast publish/subscribe
+	 **/
+	(function(context) {
+		var ps = {};
+		ps.functions = {};
+		ps.sub = function(topic, callback) {
+			if(!ps.functions[topic]) {
+				ps.functions[topic] = [];
+			}
+			ps.functions[topic].push(callback);
+		};
+		ps.pub = function(topic, args) {
+			var i, ii, funcs = ps.functions[topic];
+
+			if(!funcs) {return;}
+			
+			for(i = 0, ii = funcs.length; i<ii; i++) {
+				funcs[i].apply(this, args || []);
+			}
+		};
+		ps.clear = function(topic) {
+			if(!topic) { 
+				ps.functions = {};
+			} else {
+				ps.functions[topic] = [];
+			}
+		};
+
+		context.pubsub = ps;
+	}(context));
+	initiate_require = function(context) {
 		/*
 		 RequireJS 1.0.0 Copyright (c) 2010-2011, The Dojo Foundation All Rights Reserved.
 		 Available via the MIT or new BSD license.
@@ -82,15 +163,15 @@
 		// PATCH - Mike Wheeler - removing define wrapper, and mapping domReady to require.ready 
 		/*return b});*/that.ready=b;}(require);
 
+		/*
+		 * END of require.js and domReady.js
+		 */
 
-
-
-		// Mike Wheeler 11/18/2011
-		// require options
-		require.config({
+		// set initial require settings, to find base path and give slower IE some time
+		require.config({ 
 			baseUrl: "/bmfsweb/" + _BM_HOST_COMPANY + "/image/javascript", 
 			waitSeconds: 15
-		}); 
+		});
 
 		// expose the require library to the Global Scope
 		var expose = function(varname, val) {
@@ -107,45 +188,14 @@
 	 *  - The active pages in setup
 	 *  - Which page is currently being viewed in BigMachines
 	 **/
-	bootstrap = function() {
-		var me = {}, ps = {}, log = {}, debug = window["framework/debug"] || false;
+	bootstrap = function(context) {
+		var me = {}, repeat_until = context.repeat_until, ps = context.pubsub, log = {}, debug = window["framework/debug"] || false;
 
 		if(!setup) {return;}
 
-		if(typeof _BM_HOST_COMPANY !== "string") { 
-			throw new Error("BigMachines Framework Critical Error. Can't determine the path to the file manager for this site, because _BM_HOST_COMPANY is not available.");
-		}
-
 		me.window_url = document.location.href;
 
-		/**
-		 * Bare-bones, fast publish/subscribe
-		 **/
-		ps.functions = {};
-		ps.sub = function(topic, callback) {
-			if(!ps.functions[topic]) {
-				ps.functions[topic] = [];
-			}
-			ps.functions[topic].push(callback);
-		};
-		ps.pub = function(topic, args) {
-			var i, ii, funcs = ps.functions[topic];
 
-			if(!funcs) {return;}
-
-			if(debug) { log[topic] = log[topic]+1 || 1; }
-			
-			for(i = 0, ii = funcs.length; i<ii; i++) {
-				funcs[i].apply(this, args || []);
-			}
-		};
-		ps.clear = function(topic) {
-			if(!topic) { 
-				ps.functions = {};
-			} else {
-				ps.functions[topic] = [];
-			}
-		};
 		/**
 		 * End pub sub
 		 */
@@ -307,7 +357,6 @@
 			ps.sub("search-timeout", function() {
 				ps.clear("searches");
 			});
-			window.setTimeout(function() {ps.pub("search-timeout");}, timeout);
 
 			for(i in testees) {
 				if(!testees.hasOwnProperty(i)) {continue;}
@@ -321,16 +370,17 @@
 			}
 
 			//this function will fire over and over until the searches are cleared
-			function poll_searches() {
+			repeat_until(function() {
 				var search_topic = ps.functions["searches"];
 
 				if(search_topic && search_topic.length > 0) {
 					ps.pub("searches");
-
-					window.setTimeout(poll_searches, delay);
+					return false;
 				}
-			}
-			poll_searches();
+				return true;
+			}, delay).timeout(function() {
+				ps.pub("search-timeout");
+			}, timeout);
 		};
 
 		me.begin();
@@ -341,11 +391,25 @@
 	
 	//only load if there is an active page
 	(function() {
-		var i, go = false;
+		var i, maxtime=3000, go;
+
+		go = function() {
+			context.repeat_until(function() {
+				return typeof _BM_HOST_COMPANY === "string";
+			}).and_then(function() {
+				initiate_require(context);bootstrap(context);
+			}).timeout(function() {
+				throw new Error("BigMachines Critical Framework Error: Timed out looking for _BM_HOST_COMPANY. Try putting the reference to bm-framework.js in the footer. If that still doesn't help you may need to manually set _BM_HOST_COMPANY in the header.");
+			}, maxtime);
+		};
+
 		for(i in setup.pages) {
 			if(!setup.pages.hasOwnProperty(i)) {continue;}
-			if(setup.pages[i].active === true){go=true;break;}
+			if(setup.pages[i].active === true){go();break;}
 		}
-		if(go) {initiate_require();bootstrap();}
 	}());
-}());
+
+	context.setup = setup;
+	context.initiate_require = initiate_require;
+	context.bootstrap = bootstrap;
+}(window["framework/testing-hook"] || {}));
