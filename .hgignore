@@ -1,5 +1,0 @@
-syntax: glob
-*.zip
-js_starter\javascript\*
-js_upgrade\javascript\*
-.DS_Store
