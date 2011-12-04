@@ -67,11 +67,13 @@
 			this.has_warning = false;
 			this.is_running = false;
 			this.has_run = true;
+			jq$(document).trigger("test-failed", [this]);
 		},
 		on_warn: function(){
 			this.has_warning = true;
 			this.is_running = false;
 			this.has_run = true;
+			jq$(document).trigger("test-warned", [this]);
 		},
 		on_pass: function(){
 			this.is_clean = true;
@@ -79,11 +81,13 @@
 			this.is_running = false;
 			this.has_run = true;
 			jq$(document).trigger(this.event_name);
+			jq$(document).trigger("test-passed", [this]);
 		},
 		desc: "Any sitewide code in the old framework would have been implemented by adding a script tag to the header/footer, with the src set to allplugins-require.js. Remove this reference. If you remove this code, you will most likely also need to mark 'sitewide' as active in bm-framework.js.",
 		begin: function() {
 			var promises = [], i, ii, me = this; 
 			me.event_name = eventify(me.id);
+			jq$(document).trigger("test-beginning");
 
 			_(me.wait_for).each(function(test, list) {
 				var defer = jq$.Deferred(),
@@ -110,6 +114,7 @@
 		render: function() {
 			var me = this,
 				frame = jq$("#test-"+me.id),
+				summary_frame = jq$("#icon-"+me.id),
 				curr_temp = function() {
 					if(me.has_warning === true && me.warning_passes === false) {
 						return templates.warn_temp;
@@ -120,11 +125,14 @@
 
 			if(frame.length < 1) {
 				frame = jq$("<div id='test-"+me.id+"' class='outer-frame' />");
+				summary_frame = jq$("<div id='icon-"+me.id+"' style='float:left' />"),
 				jq$(".main > .bd").append(frame); 
+				jq$("#status-div").append(summary_frame);
 				me.is_built = true;
 			}
 
 			frame.html(templates.base_temp(me));
+			summary_frame.html(templates.icon_temp(me));
 			if(me.has_run) {
 				jq$(".bd", frame).append(curr_temp(me));
 			}
@@ -455,6 +463,16 @@
 		return tests;
 	}
 
+	function show_status() {
+		var me = {}, element, max_count = warnings = errors = curr_count = 0, max, curr, stat;
+		element = jq$("#status-div");
+
+		if(element.length < 1) {
+			element = jq$("<div id='status-div'></div>");
+			jq$(".main > .hd").after(element);
+		}
+	}
+
 	jq$(document).ready(function() {
 		var $site = jq$("#sitename"), tests, message;
 		$site.val(document.location.hostname.match(/[^\.]+/));
@@ -465,6 +483,9 @@
 			clean_temp: _.template(jq$("#clean").html()),
 			warn_temp: _.template(jq$("#warning").html()),
 			head_temp: _.template(jq$("#header-desc").html()),
+			icon_temp: _.template("<div class='<%= (is_clean ? 'clean' : 'dirty') %> <%= (has_run && !is_running ? '' : 'no-run') %>\
+														<%= (has_warning ? 'warning' : '') %>'\
+														style='width: 10px; height: 10px;'></div>"),
 			sitename: $site.val()
 		};
 
@@ -477,9 +498,11 @@
 		}));
 
 		jq$("#run").click(function() {
+			show_status();
 			templates.sitename = $site.val();
 			jq$(document).trigger("abort-tests");
 			jq$(document).trigger("begin-tests");
+
 			return false;
 		});
 
