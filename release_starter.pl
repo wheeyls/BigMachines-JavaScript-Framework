@@ -10,7 +10,7 @@ if($opt_h) {
 	exit 0;
 }
 
-my $src = @ARGV[0] || "test_demo/js";
+my $src = @ARGV[0] || "framework/js";
 my $dest = @ARGV[1] || "js_starter/javascript";
 my $upgrade_dest = @ARGV[2] || "js_upgrade/javascript";
 
