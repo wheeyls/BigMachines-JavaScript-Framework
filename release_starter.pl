@@ -14,9 +14,9 @@ my $src = @ARGV[0] || "framework/js";
 my $dest = @ARGV[1] || "js_starter/javascript";
 my $upgrade_dest = @ARGV[2] || "js_upgrade/javascript";
 
-my @list = qw(bm-framework.js upgrade.html text.js return_to_quote_button.js commerce_ids.js jquery_cookie.js);
+my @list = qw(bm-framework.js upgrade.html return_to_quote_button.js commerce_ids.js jquery_cookie.js);
 my @from_template = qw(commerce.js commerce_line.js config.js homepage.js sitewide.js);
-my @upgrade_files = qw(bm-framework.js upgrade.html text.js return_to_quote_button.js);
+my @upgrade_files = qw(bm-framework.js upgrade.html return_to_quote_button.js);
 my @all_files = @list;
 
 # read in template
