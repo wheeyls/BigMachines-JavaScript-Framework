@@ -12,7 +12,7 @@ Updating Require
 ================
 If you need to build the framework with a new version of require, then you can use the r.js optimizer tool to do so. The tool can be harnessed using either Rhino or Node.js; I recommend Node.js, since it can be installed and run in Windows and will be easier and faster to set up.
 
-Once you have Node ready, you can run the following command from within the "build" directory:
+Once you have Node ready, you can run the following command from within the "compile-require" directory:
 
     node r.js -o baseUrl=. paths.requireLib=require name=before-compile include=requireLib out=after-compile.js
 
