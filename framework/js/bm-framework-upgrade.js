@@ -252,7 +252,7 @@
 	 * Please note that every test MUST have a unique ID to run properly.
 	 **/
 	function build_tests() {
-		var tests = new Collection(), version = "Fri Dec  2 14:43:33 2011";
+		var tests = new Collection(), version = "Mon Dec 19 11:24:51 2011";
 
 		// check for existense of framework 2 files
 		var framework_file = test_presence.create_sub({
