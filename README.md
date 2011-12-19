@@ -2,6 +2,8 @@ Requirements
 ============
 In order to build a copy of the Framework and Upgrade Kits using this source, you will need Perl installed on your machine. 
 
+You will need Node.js if you want to modify the Require library.
+
 Building
 ========
 The BigMachines Framework can be built using the "release_starter.pl" script found in this directory. That script will grab the expected files from the "framework" and package them as zips into the Framework Starter Kit and Upgrade Kits, along with all their documentation.
