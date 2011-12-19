@@ -1,6 +1,6 @@
 Requirements
 ============
-In order to build a copy of the Framework and Upgrade Kits using this source, you will need Perl installed on your machine. To update the version of Require.js used by the framework, you will need Node.js.
+In order to build a copy of the Framework and Upgrade Kits using this source, you will need Perl installed on your machine. 
 
 Building
 ========
@@ -8,14 +8,14 @@ The BigMachines Framework can be built using the "release_starter.pl" script fou
 
 Once you've run the build command, you will probably want to zip up the contents of those folders in order to easily share the release with others.
 
-Updating Require
-================
-If you need to build the framework with a new version of require, then you can use the r.js optimizer tool to do so. The tool can be harnessed using either Rhino or Node.js; I recommend Node.js, since it can be installed and run in Windows and will be easier and faster to set up.
+Compiling Require
+=================
+The framework makes use of RequireJS, as well as the domReady Plugin. These libaries are minified using RequireJS's optimization tool, and included in the bm-framework.js file.
 
-Once you have Node ready, you can run the following command from within the "compile-require" directory:
+To compile, you will need to get NodeJS installed on your machine. Once it is setup, open a command line and change directories to the "compile-require" folder.
+
+You can replace require.js and/or domReady.js with any version that you would like to use, and then the following command to generate a new minified version:
 
     node r.js -o baseUrl=. paths.requireLib=require name=before-compile include=requireLib out=after-compile.js
 
-This will create a build of require that includes all the files listed in the "before-compile.js" file, using the version of require in the "require.js" file.
-
-Once you have that file built, you can use it by pasting the contents of after- compile.js into bm-framework.js, in between the // ======REQUIRE====== comment blocks.
+The result will be output to after-compile.js. To use the library in the framework, copy and paste the contents of after-compile into bm-framework.js, replacing all the content between the "====== REQUIRE ======" commented section in the source code.

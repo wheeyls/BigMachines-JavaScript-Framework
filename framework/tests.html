@@ -5,7 +5,7 @@
     <script type="text/javascript" src="http://code.jquery.com/qunit/git/qunit.js"></script>
 
 		<script src="js/allplugins-require.js" data-main="never-load.js"></script>
-		<script>window["framework/testing-hook"] = {};</script>
+		<script>window["framework/testing-hook"] = {base_url:"js/"};</script>
 		<script src="js/bm-framework.js" type="text/javascript"></script>
 		<script type="text/javascript">
 			(function() {
@@ -173,6 +173,13 @@
 
 					stub.undo();
 				});
+        asyncTest("require.ready works", function() {
+          expect(1);
+          require.ready(function() {
+            start();
+            ok(true, "Ready should be called");
+          });
+        });
 			}());
 		</script>
 	</head>
